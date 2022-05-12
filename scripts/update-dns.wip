@@ -1,0 +1,30 @@
+
+source $SCRIPTS/env/uip-api.sh
+export LB=$(kubectl get service/public-ingressgateway -o yaml -n istio-system | yq '.status.loadBalancer.ingress[].hostname')
+export URL=${1-"*.dev.bahsoftwarefactory.com"}
+
+
+echo "Retrieve UIP Security Token"
+export TOKEN=$(curl -X 'POST' \
+  'https://api.uip.sh/auth/token' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d "grant_type=&username=$UIP_API_USERNAME&password=$UIP_API_TOKEN&scope=&client_id=&client_secret=" \
+  | jq '.access_token' \
+  | sed 's/"//g')
+
+echo "--- UIP Token Generated: $TOKEN"
+
+echo "Register DNS Entry for Load Balancer"
+curl -X 'POST' \
+  'https://api.uip.sh/register-record/' \
+  -H 'accept: application/json' \
+  -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d "{ \
+  \"name\": \"$URL\", \
+  \"value\": \"$LB\", \
+  \"type\": \"CNAME\", \
+  \"ttl\": \"60\" \
+}"
+

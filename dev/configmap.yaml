@@ -1,0 +1,114 @@
+domain: dev.bahsoftwarefactory.com
+addons:
+  vault:
+    enabled: true
+
+istio:
+  enabled: true
+  ingressGateways:
+    public-ingressgateway:
+      type: "LoadBalancer"
+      kubernetesResourceSpec:
+        serviceAnnotations:
+          service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "false"
+          service.beta.kubernetes.io/aws-load-balancer-type: nlb
+          service.beta.kubernetes.io/aws-load-balancer-name: "development.basoftwarefactory.com"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/c-m-xgd7cmkn=owned"
+          service.beta.kubernetes.io/aws-load-balancer-attributes: "load_balancing.cross_zone.enabled=false,deletion_protection.enabled=false"
+          service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-0604239537880429e,subnet-097be7160f7469241,subnet-0ae69f6e25ba9ba92"
+
+istiooperator:
+  enabled: true
+
+kiali:
+  enabled: true
+
+jaeger:
+  enabled: true
+
+eckoperator:
+  enabled: false
+
+flux:
+  interval: 1m
+  rollback:
+    cleanupOnFail: false
+
+logging:
+  enabled: false
+  values:
+    elasticsearch:
+      master:
+        count: 1
+        persistence:
+          size: 256Mi
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1Gi
+      data:
+        count: 1
+        persistence:
+          size: 256Mi
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1Gi
+    kibana:
+      count: 1
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+
+monitoring:
+  enabled: false
+  values:
+    prometheus:
+      prometheusSpec:
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1Gi
+
+fluentbit:
+  enabled: false
+  values:
+    securityContext:
+      privileged: false
+
+clusterAuditor:
+  enabled: false
+
+gatekeeper:
+  enabled: false
+  values:
+    violations:
+      allowedDockerRegistries:
+        parameters:
+          repos:
+            - registry1.dso.mil
+            - k8s.gcr.io
+            - registry.uip.sh
+    replicas: 1
+    controllerManager:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+    audit:
+      resources:
+        requests:
+          cpu: 200m
+          memory: 256Mi
+
+kyverno:
+  values:
+    replicaCount: 1
+
+twistlock:
+  enabled: false
+  values:
+    console:
+      persistence:
+        size: 256Mi
