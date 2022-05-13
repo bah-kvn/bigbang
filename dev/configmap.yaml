@@ -1,10 +1,10 @@
 domain: dev.bahsoftwarefactory.com
 addons:
   vault:
-    enabled: true
+    enabled: false
 
 istio:
-  enabled: true
+  enabled: false
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -18,13 +18,13 @@ istio:
           service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-0604239537880429e,subnet-097be7160f7469241,subnet-0ae69f6e25ba9ba92"
 
 istiooperator:
-  enabled: true
+  enabled: false
 
 kiali:
-  enabled: true
+  enabled: false
 
 jaeger:
-  enabled: true
+  enabled: false
 
 eckoperator:
   enabled: false

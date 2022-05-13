@@ -10,9 +10,9 @@ metadata:
   namespace: bigbang
 spec:
   interval: 1m
-  url: https://github.com/bah-kvn/bigbang.git
+  url: https://github.boozallencsn.com/Solutions-Center/bigbang.git
   ref:
-    branch: main
+    branch: Main
   secretRef:
     name: private-git
 ---
