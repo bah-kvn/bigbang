@@ -1,0 +1,122 @@
+domain: sls2.bahsoftwarefactory.com
+
+istio:
+  enabled: true
+  ingressGateways:
+    public-ingressgateway:
+      type: "LoadBalancer"
+      kubernetesResourceSpec:
+        serviceAnnotations:
+          service.beta.kubernetes.io/aws-load-balancer-type: nlb
+          service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "false"
+          service.beta.kubernetes.io/aws-load-balancer-attributes: "load_balancing.cross_zone.enabled=false,deletion_protection.enabled=false"
+          service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-08942469f925d9b66,subnet-04987f9522e27a836,subnet-069fd7685cca4018a"
+          service.beta.kubernetes.io/aws-load-balancer-name: "sls-nlb"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/c-m-d6cm4vn6=owned,Dev=sls"
+  # The following config is in the secrets.enc.yaml file due to the inability to merge lists of maps
+  # gateways:
+  #   public:
+  #     servers:
+  #     - hosts:
+  #       - "*.{{ .Values.domain }}"
+  #       tls:
+  #         key: <encrypted>
+  #         cert: <encrypted>
+  #     - hosts:
+  #       - "keycloak.{{ .Values.domain }}"
+  #       tls:
+  #         mode: "PASSTHROUGH"
+
+flux:
+  interval: 1m
+  rollback:
+    cleanupOnFail: false
+
+logging:
+  enabled: false
+  values:
+    elasticsearch:
+      master:
+        count: 1
+        persistence:
+          size: 256Mi
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1Gi
+      data:
+        count: 1
+        persistence:
+          size: 256Mi
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1Gi
+    kibana:
+      count: 1
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+
+monitoring:
+  enabled: false
+  values:
+    prometheus:
+      prometheusSpec:
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1Gi
+
+fluentbit:
+  values:
+    securityContext:
+      privileged: true
+
+gatekeeper:
+  values:
+    replicas: 1
+    controllerManager:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+    audit:
+      resources:
+        requests:
+          cpu: 200m
+          memory: 256Mi
+    violations:
+      allowedDockerRegistries:
+        parameters:
+          repos:
+            - registry1.dso.mil
+            - k8s.gcr.io
+            - registry.uip.sh
+            - docker.io
+            - longhornio
+            - rancher
+
+kyverno:
+  values:
+    replicaCount: 1
+
+twistlock:
+  enabled: false
+  values:
+    console:
+      persistence:
+        size: 256Mi
+
+addons:
+  argocd:
+    enabled: false
+    git:
+      repo: https://repo1.dso.mil/platform-one/big-bang/apps/core/argocd.git
+      path: "./chart"
+      tag: "4.2.3-bb.1"
+  keycloak:
+    enabled: true
+    ingress:
+      gateway: public

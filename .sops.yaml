@@ -1,3 +1,5 @@
 creation_rules:
 - encrypted_regex: '^(data|stringData)$'
   pgp: CD3D3528CE1671DC7236312999A4AC740D06AD5C
+     ,1A3CFD655848655AC7C9657572DFB493C19A7F9C # Scott's PGP fingerprint
+  arn: arn:aws:kms:us-east-1:729651203190:key/48cbff42-3fbc-4f93-84fc-2cde7af46a3a
