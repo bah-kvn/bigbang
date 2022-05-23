@@ -127,7 +127,7 @@ twistlock:
 
 addons:
   gitlab:
-    enabled: false
+    enabled: true
     hostnames:
       gitlab: gitlab
       registry: gitlab-registry
@@ -187,7 +187,7 @@ addons:
             providers:
               - secret: github
   vault:
-    enabled: false
+    enabled: true
     ingress:
       gateway: "passthrough"
       key: |-
