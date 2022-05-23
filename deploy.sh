@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 #set -e
 
-# Variables
-export fp="CD3D3528CE1671DC7236312999A4AC740D06AD5C"
-
-# Config
 kubectl create namespace bigbang
 kubectl create namespace flux-system
 gpg --export-secret-key --armor ${fp} | kubectl -n bigbang create secret generic sops-gpg --from-file=bigbangkey.asc=/dev/stdin
