@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#set -e
+set -e
 
 kubectl create namespace bigbang
 kubectl create namespace flux-system
