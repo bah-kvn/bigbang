@@ -3,7 +3,7 @@
 ###############
 ## Variables ##
 ###############
-. variables.conf
+. 00-variables.conf
 
 ## Loading creds
 export AWS_PROFILE=$AWSAML_PROFILE
