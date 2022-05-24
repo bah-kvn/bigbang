@@ -285,7 +285,7 @@ addons:
               - secret: github
 
   vault:
-    enabled: true
+    enabled: false
     ingress:
       gateway: "passthrough"
       key: |-
