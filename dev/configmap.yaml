@@ -1,7 +1,7 @@
 domain: dev.bahsoftwarefactory.com
 
 istio:
-  enabled: true
+  enabled: false
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -287,7 +287,7 @@ addons:
               - secret: github
 
   vault:
-    enabled: true
+    enabled: false
     ingress:
       gateway: "passthrough"
       key: |-
