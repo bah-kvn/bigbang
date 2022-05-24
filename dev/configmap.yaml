@@ -32,10 +32,10 @@ istiooperator:
   enabled: true
 
 kiali:
-  enabled: false
+  enabled: true
 
 jaeger:
-  enabled: false
+  enabled: true
 
 eckoperator:
   enabled: false
@@ -127,7 +127,7 @@ twistlock:
 
 addons:
   keycloak:
-    enabled: false
+    enabled: true
     ingress:
       gateway: "passthrough"
       key: |-
@@ -285,7 +285,7 @@ addons:
               - secret: github
 
   vault:
-    enabled: false
+    enabled: true
     ingress:
       gateway: "passthrough"
       key: |-
