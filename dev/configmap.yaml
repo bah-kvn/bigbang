@@ -287,7 +287,6 @@ addons:
   vault:
     enabled: true
     ingress:
-      enabled: false
       gateway: "passthrough"
       key: |-
         -----BEGIN PRIVATE KEY-----
