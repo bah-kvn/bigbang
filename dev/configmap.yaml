@@ -131,7 +131,6 @@ addons:
     ingress:
       gateway: "public"
       key: |-
-
         -----BEGIN PRIVATE KEY-----
         MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCyCk39jfwcmM5g
         J5jP1wvm+cHyR2OQb4c4f23YVDyEpPjg/U3F3maClJGuIA0zY3W9FHzTywKZTkfS
@@ -161,7 +160,6 @@ addons:
         Qr9rQlOMre4OTsNl/utSjdw=
         -----END PRIVATE KEY-----
       cert: |-
-
         -----BEGIN CERTIFICATE-----
         MIIFFjCCAv6gAwIBAgIRAJErCErPDBinU/bWLiWnX1owDQYJKoZIhvcNAQELBQAw
         TzELMAkGA1UEBhMCVVMxKTAnBgNVBAoTIEludGVybmV0IFNlY3VyaXR5IFJlc2Vh
