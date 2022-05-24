@@ -31,7 +31,7 @@ istio:
         mode: "PASSTHROUGH"
 
 istiooperator:
-  enabled: false
+  enabled: true
 
 kiali:
   enabled: true
