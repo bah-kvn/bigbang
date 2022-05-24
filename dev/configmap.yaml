@@ -129,7 +129,7 @@ addons:
   keycloak:
     enabled: true
     ingress:
-      gateway: "passthrough"
+      gateway: "public"
       key: |-
 
         -----BEGIN PRIVATE KEY-----
