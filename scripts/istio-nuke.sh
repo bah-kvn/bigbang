@@ -1,6 +1,4 @@
 
-
-
 istioctl x uninstall --purge --verbose -y
 istioctl experimental precheck --verbose
 
