@@ -1,3 +1,3 @@
-kubectl get mutatingwebhookconfigurations,validatingwebhookconfigurations,wasmplugins,istiooperators,destinationrules,envoyfilters -A
-kubectl get gateways,proxyconfigs,serviceentries,sidecars,virtualservices,workloadentries,workloadgroups,authorizationpolicies -A
-kubectl get peerauthentications,requestauthentications,telemetries -A
+resources=$(kubectl get mutatingwebhookconfigurations,validatingwebhookconfigurations,wasmplugins,istiooperators,destinationrules,envoyfilters,gateways,proxyconfigs,serviceentries,sidecars,virtualservices,workloadentries,workloadgroups,authorizationpolicies,peerauthentications,requestauthentications,telemetries -A | cut -d' ' -f1 )
+
+echo "$resources"
