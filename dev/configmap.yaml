@@ -21,7 +21,7 @@ istio:
     passthrough:
       ingressGateway: "passthrough-ingressgateway"
       hosts:
-      - "*.{{ .Values.domain }}"
+      - "vault.{{ .Values.domain }}"
       tls:
         mode: "PASSTHROUGH"
           

@@ -1,0 +1,13 @@
+
+https://repo1.dso.mil/platform-one/big-bang/bigbang/-/blob/master/chart/templates/vault/values.yaml
+istio:
+  enabled: {{ .Values.istio.enabled }}
+  vault:
+    gateways:
+      - istio-system/{{ default "public" .Values.addons.vault.ingress.gateway }}
+    {{- if and .Values.addons.vault.ingress.cert .Values.addons.vault.ingress.key }}
+    tls:
+      cert: {{ .Values.addons.vault.ingress.cert | quote }}
+      key:  {{ .Values.addons.vault.ingress.key | quote }}
+    {{- end }}
+
