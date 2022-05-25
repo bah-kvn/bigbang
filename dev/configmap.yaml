@@ -124,7 +124,7 @@ twistlock:
 
 addons:
   vault:
-    enabled: true
+    enabled: false
     ingress:
       gateway: "passthrough"
       key: |-
