@@ -1,22 +1,6 @@
 domain: dev.bahsoftwarefactory.com
 istio:
-  enabled: true
-  ingressGateways:
-    public-ingressgateway:
-      type: "NodePort"
-      nodePortBase: 30000
-  gateways:
-    public:
-      ingressGateway: "public-ingressgateway"
-      hosts:
-        - "*.{{ .Values.domain }}"
-      tls:
-        key: |-
-          -----BEGIN PRIVATE KEY-----
-          MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDNiikK77WNUyWZ
-          EutCe/3rbCff194M2qGctd7ij2lE
-istio:
-  enabled: true
+  enabled: false
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -42,27 +26,21 @@ istio:
     passthrough:
       ingressGateway: "passthrough-ingressgateway"
       hosts:
-      - "*.{{ .Values.domain }}"
+        - "*.{{ .Values.domain }}"
       tls:
         mode: "PASSTHROUGH"
-          
 istiooperator:
-  enabled: true
-
+  enabled: false
 kiali:
-  enabled: true
-
+  enabled: false
 jaeger:
-  enabled: true
-
+  enabled: false
 eckoperator:
   enabled: false
-
 flux:
   interval: 1m
   rollback:
     cleanupOnFail: false
-
 logging:
   enabled: false
   values:
@@ -89,7 +67,6 @@ logging:
         requests:
           cpu: 200m
           memory: 512Mi
-
 monitoring:
   enabled: false
   values:
@@ -99,16 +76,13 @@ monitoring:
           requests:
             cpu: 200m
             memory: 1Gi
-
 fluentbit:
   enabled: false
   values:
     securityContext:
       privileged: false
-
 clusterAuditor:
   enabled: false
-
 gatekeeper:
   enabled: false
   values:
@@ -130,22 +104,19 @@ gatekeeper:
         requests:
           cpu: 200m
           memory: 256Mi
-
 kyverno:
   enabled: false
   values:
     replicaCount: 1
-
 twistlock:
   enabled: false
   values:
     console:
       persistence:
         size: 256Mi
-
 addons:
   vault:
-    enabled: true
+    enabled: false
     values:
       autoInit:
         enabled: true
@@ -163,8 +134,8 @@ addons:
             memory: 8Gi
             cpu: 2000m
         extraVolumes:
-        - type: secret
-          name: vault-server-tls 
+          - type: secret
+            name: vault-server-tls
         extraEnvironmentVars:
           VAULT_API_ADDR: https://vault.dev.bahsoftwarefactory.com
           VAULT_ADDR: https://127.0.0.1:8200
