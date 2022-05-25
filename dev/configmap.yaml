@@ -290,8 +290,8 @@ addons:
                 tls_disable = 0
                 address = "[::]:8200"
                 cluster_address = "[::]:8201"
-                tls_cert_file = "/vault/tls/tls.crt"
-                tls_key_file  = "/vault/tls/tls.key"
+                tls_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                tls_key_file  = "/vault/userconfig/vault-server-tls/tls.key"
               }
 
               storage "raft" {
@@ -299,22 +299,22 @@ addons:
 
                 retry_join {
                   leader_api_addr = "https://vault-vault-0.vault-vault-internal:8200"
-                  leader_client_cert_file = "/vault/tls/tls.crt"
-                  leader_client_key_file = "/vault/tls/tls.key"
+                  leader_client_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                  leader_client_key_file = "/vault/userconfig/vault-server-tls/tls.key"
                   leader_tls_servername = "vault.dev.bahsoftwarefactory.com"
                 }
 
                 retry_join {
                   leader_api_addr = "https://vault-vault-1.vault-vault-internal:8200"
-                  leader_client_cert_file = "/vault/tls/tls.crt"
-                  leader_client_key_file = "/vault/tls/tls.key"
+                  leader_client_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                  leader_client_key_file = "/vault/userconfig/vault-server-tls/tls.key"
                   leader_tls_servername = "vault.dev.bahsoftwarefactory.com"
                 }
 
                 retry_join {
                   leader_api_addr = "https://vault-vault-2.vault-vault-internal:8200"
-                  leader_client_cert_file = "/vault/tls/tls.crt"
-                  leader_client_key_file = "/vault/tls/tls.key"
+                  leader_client_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                  leader_client_key_file = "/vault/userconfig/vault-server-tls/tls.key"
                   leader_tls_servername = "vault.dev.bahsoftwarefactory.com"
                 }
               }

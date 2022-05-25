@@ -3,9 +3,9 @@ kind: Pod
 metadata:
   annotations:
     bigbang.dev/istioVersion: 1.13.2
-    cni.projectcalico.org/containerID: 2703cf3addf3bab43162cb6e9b4419035f2a48498e830dac3ca26be32aa99f37
-    cni.projectcalico.org/podIP: 10.42.40.61/32
-    cni.projectcalico.org/podIPs: 10.42.40.61/32
+    cni.projectcalico.org/containerID: 6cfe8b184982e94e4078d8e26bbc854a643451947258b0f62f136a2de4171263
+    cni.projectcalico.org/podIP: 10.42.40.63/32
+    cni.projectcalico.org/podIPs: 10.42.40.63/32
     kubectl.kubernetes.io/default-container: vault
     kubectl.kubernetes.io/default-logs-container: vault
     kubernetes.io/psp: global-unrestricted-psp
@@ -142,7 +142,7 @@ spec:
     - mountPath: /etc/istio/pod
       name: istio-podinfo
     - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-      name: kube-api-access-fsz4k
+      name: kube-api-access-mt442
       readOnly: true
   - args:
     - "cp /vault/config/extraconfig-from-values.hcl /tmp/storageconfig.hcl;\n[ -n
@@ -246,7 +246,7 @@ spec:
     - mountPath: /home/vault
       name: home
     - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-      name: kube-api-access-fsz4k
+      name: kube-api-access-mt442
       readOnly: true
   hostname: vault-vault-0
   imagePullSecrets:
@@ -291,7 +291,7 @@ spec:
       runAsUser: 0
     volumeMounts:
     - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-      name: kube-api-access-fsz4k
+      name: kube-api-access-mt442
       readOnly: true
   preemptionPolicy: PreemptLowerPriority
   priority: 0
@@ -336,12 +336,12 @@ spec:
   - configMap:
       name: istio-ca-root-cert
     name: istiod-ca-cert
-  - name: audit
-    persistentVolumeClaim:
-      claimName: audit-vault-vault-0
   - name: data
     persistentVolumeClaim:
       claimName: data-vault-vault-0
+  - name: audit
+    persistentVolumeClaim:
+      claimName: audit-vault-vault-0
   - configMap:
       name: vault-vault-config
     name: config
@@ -349,7 +349,7 @@ spec:
     secret:
       secretName: vault-server-tls
   - name: home
-  - name: kube-api-access-fsz4k
+  - name: kube-api-access-mt442
     projected:
       sources:
       - serviceAccountToken:
