@@ -124,7 +124,7 @@ twistlock:
 
 addons:
   vault:
-    enabled: true
+    enabled: false
     ingress:
       gateway: "passthrough"
       key: |-
@@ -251,7 +251,7 @@ addons:
         -----END CERTIFICATE-----
     values:
       autoInit:
-        enabled: false
+        enabled: true
       global:
         tlsDisable: false
       injector:
