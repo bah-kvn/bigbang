@@ -265,6 +265,9 @@ addons:
           limits:
             memory: 8Gi
             cpu: 2000m
+        extraVolumes:
+        - type: secret
+          name: vault-server-tls 
         extraEnvironmentVars:
           # the istio gateway domain
           VAULT_API_ADDR: https://vault.dev.bahsoftwarefactory.com
