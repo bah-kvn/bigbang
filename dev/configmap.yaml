@@ -7,26 +7,23 @@ istio:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/c-m-8slnllj8=owned,env=development,ingress-type=mixed"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/c-m-8slnllj8=owned,env=development,ingress-type=public"
           service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-08942469f925d9b66,subnet-04987f9522e27a836,subnet-069fd7685cca4018a"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
-# additional istio config in the secrets.enc.yaml (base) file
-#  gateways:
-#    public:
-#      servers:
-#      - hosts:
-#        - "*.{{ .Values.domain }}"
-#        tls:
-#          key: key-data
-#          cert: cert-data
-#      - hosts:
-#        - "keycloak.{{ .Values.domain }}"
-#        tls:
-#          mode: "PASSTHROUGH"
-#      - hosts:
-#        - "keycloak-test-service.{{ .Values.domain }}"
-#        tls:
-#          mode: "PASSTHROUGH"
+    passthrough-ingressgateway:
+      type: "LoadBalancer"
+      kubernetesResourceSpec:
+        serviceAnnotations:
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/c-m-8slnllj8=owned,env=development,ingress-type=passthrough"
+          service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-08942469f925d9b66,subnet-04987f9522e27a836,subnet-069fd7685cca4018a"
+          service.beta.kubernetes.io/aws-load-balancer-type: nlb
+  gateways:
+    passthrough:
+      ingressGateway: "passthrough-ingressgateway"
+      hosts:
+      - "*.{{ .Values.domain }}"
+      tls:
+        mode: "PASSTHROUGH"
           
 istiooperator:
   enabled: true
@@ -315,7 +312,7 @@ addons:
   vault:
     enabled: true
     ingress:
-      gateway: "public"
+      gateway: "passthrough"
       key: |-
         -----BEGIN PRIVATE KEY-----
         MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC3w9fhQWQXtOiK
