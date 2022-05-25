@@ -1,3 +1,6 @@
+addons.yaml
+8-public-tls.yaml
+public-tls.yaml
 chart
 **values.yaml
 istio-values.yaml
