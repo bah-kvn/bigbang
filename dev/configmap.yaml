@@ -1,7 +1,7 @@
 domain: dev.bahsoftwarefactory.com
 
 istio:
-  enabled: true
+  enabled: false
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -26,13 +26,13 @@ istio:
         mode: "PASSTHROUGH"
           
 istiooperator:
-  enabled: true
+  enabled: false
 
 kiali:
-  enabled: true
+  enabled: false
 
 jaeger:
-  enabled: true
+  enabled: false
 
 eckoperator:
   enabled: false
@@ -124,7 +124,7 @@ twistlock:
 
 addons:
   vault:
-    enabled: true
+    enabled: false
     ingress:
       gateway: "passthrough"
       key: |-
