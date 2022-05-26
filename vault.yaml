@@ -118,4 +118,70 @@ twistlock:
         size: 256Mi
 addons:
   vault:
-    enabled: false
+    enabled: true
+    values:
+      autoInit:
+        enabled: true
+      global:
+        tlsDisable: false
+      injector:
+        extraEnvironmentVars:
+          AGENT_INJECT_VAULT_ADDR: "https://vault.dev.bahsoftwarefactory.com"
+      server:
+        resources:
+          requests:
+            memory: 8Gi
+            cpu: 2000m
+          limits:
+            memory: 8Gi
+            cpu: 2000m
+        extraVolumes:
+          - type: secret
+            name: vault-server-tls
+        extraEnvironmentVars:
+          VAULT_API_ADDR: https://vault.dev.bahsoftwarefactory.com
+          VAULT_ADDR: https://127.0.0.1:8200
+          VAULT_SKIP_VERIFY: "true"
+          VAULT_LOG_FORMAT: "json"
+        ha:
+          enabled: true
+          replicas: 3
+          raft:
+            enabled: true
+            setNodeId: true
+            config: |
+              ui = true
+              listener "tcp" {
+                tls_disable = 0
+                address = "[::]:8200"
+                cluster_address = "[::]:8201"
+                tls_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                tls_key_file  = "/vault/userconfig/vault-server-tls/tls.key"
+              }
+              storage "raft" {
+                path = "/vault/data"
+                retry_join {
+                  leader_api_addr = "https://vault-vault-0.vault-vault-internal:8200"
+                  leader_client_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                  leader_client_key_file = "/vault/userconfig/vault-server-tls/tls.key"
+                  leader_tls_servername = "vault.dev.bahsoftwarefactory.com"
+                }
+                retry_join {
+                  leader_api_addr = "https://vault-vault-1.vault-vault-internal:8200"
+                  leader_client_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                  leader_client_key_file = "/vault/userconfig/vault-server-tls/tls.key"
+                  leader_tls_servername = "vault.dev.bahsoftwarefactory.com"
+                }
+                retry_join {
+                  leader_api_addr = "https://vault-vault-2.vault-vault-internal:8200"
+                  leader_client_cert_file = "/vault/userconfig/vault-server-tls/tls.crt"
+                  leader_client_key_file = "/vault/userconfig/vault-server-tls/tls.key"
+                  leader_tls_servername = "vault.dev.bahsoftwarefactory.com"
+                }
+              }
+              telemetry {
+                prometheus_retention_time = "24h"
+                disable_hostname = true
+                unauthenticated_metrics_access = true
+              }
+              service_registration "kubernetes" {}
