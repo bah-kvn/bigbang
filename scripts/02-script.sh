@@ -97,3 +97,24 @@ kubectl get deploy -o name -n flux-system | xargs -n1 -t kubectl rollout status 
 #####################
 kubectl apply -f dev/bigbang.yaml
 
+############
+## Output ##
+############
+
+echo "
+
+Useful Commands now are:
+
+kubectl get nodes
+kubectl get po -A
+kubectl get hr -A
+
+After a few minutes:
+kubectl get gitrepo -A 
+
+After a few more minutes:
+kubectl get vs -A 
+
+Troubleshooting:
+kubectl api-resources
+"

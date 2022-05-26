@@ -44,19 +44,19 @@ aws route53 change-resource-record-sets --hosted-zone-id Z035959739Z0LUKSAJZYX -
 }' --no-cli-pager
 
 
-## Adding IP to Loadbalancer SG - ok
-LB_SG=$(aws elb describe-load-balancers \
-	--load-balancer-name $LB_NAME \
-	--region us-east-1 \
-	--no-cli-pager | \
-	jq '.LoadBalancerDescriptions[0].SecurityGroups[0]' | \
-	sed 's/"//g')
-
-YOUR_IP=$(curl ifconfig.me)
-
-aws ec2 authorize-security-group-ingress \
-    --group-id "$LB_SG" \
-    --ip-permissions IpProtocol=all,FromPort=-1,ToPort=-1,IpRanges='[{CidrIp='"$YOUR_IP"/32',Description='"$SG_DESCRIPTION"'}]' \
-    --region us-east-1 \
-    --no-cli-pager
+## Adding IP to Loadbalancer SG - ok if Classic LB then uncomment.
+#LB_SG=$(aws elb describe-load-balancers \
+#	--load-balancer-name $LB_NAME \
+#	--region us-east-1 \
+#	--no-cli-pager | \
+#	jq '.LoadBalancerDescriptions[0].SecurityGroups[0]' | \
+#	sed 's/"//g')
+#
+#YOUR_IP=$(curl ifconfig.me)
+#
+#aws ec2 authorize-security-group-ingress \
+#    --group-id "$LB_SG" \
+#    --ip-permissions IpProtocol=all,FromPort=-1,ToPort=-1,IpRanges='[{CidrIp='"$YOUR_IP"/32',Description='"$SG_DESCRIPTION"'}]' \
+#    --region us-east-1 \
+#    --no-cli-pager
 
