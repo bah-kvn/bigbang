@@ -118,4 +118,4 @@ twistlock:
         size: 256Mi
 addons:
   vault:
-    enabled: false
+    enabled: true
