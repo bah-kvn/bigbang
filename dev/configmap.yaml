@@ -118,7 +118,13 @@ twistlock:
         size: 256Mi
 addons:
   vault:
-    enabled: true
+    enabled: false
+
+    git:
+      repo: https://repo1.dso.mil/platform-one/big-bang/apps/sandbox/vault.git
+      path: "./chart"
+      tag: "0.20.0-bb.0"
+
     values:
       autoInit:
         enabled: false
