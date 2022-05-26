@@ -1,0 +1,6 @@
+
+              seal "awskms" {
+                region     = "us-east-1"
+                kms_key_id = "bde2b254-f04b-4f48-b5b4-4376120c5181"
+                endpoint   = "https://kms.us-east-1.amazonaws.com"
+              }
