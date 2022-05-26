@@ -118,10 +118,10 @@ twistlock:
         size: 256Mi
 addons:
   vault:
-    enabled: true
+    enabled: false
     values:
       autoInit:
-        enabled: true
+        enabled: false
       global:
         tlsDisable: false
       injector:
