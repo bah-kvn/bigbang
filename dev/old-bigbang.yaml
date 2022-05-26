@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   name: bigbang
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
   name: environment-repo
@@ -32,4 +32,3 @@ spec:
     provider: sops
     secretRef:
       name: sops-gpg
-
