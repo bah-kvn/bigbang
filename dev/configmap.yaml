@@ -127,6 +127,9 @@ addons:
       injector:
         extraEnvironmentVars:
           AGENT_INJECT_VAULT_ADDR: "https://vault.dev.bahsoftwarefactory.com"
+      ui:
+        enabled: true
+        activeVaultPodOnly: true
       server:
         resources:
           requests:
