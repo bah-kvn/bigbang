@@ -118,4 +118,22 @@ twistlock:
         size: 256Mi
 addons:
   vault:
-    enabled: true
+    enabled: false
+    values:
+      autoInit:
+        enabled: true
+      global:
+        tlsDisable: false
+      injector:
+        extraEnvironmentVars:
+          AGENT_INJECT_VAULT_ADDR: "https://vault.dev.bahsoftwarefactory.com"
+      server:
+        resources:
+          requests:
+            memory: 8Gi
+            cpu: 2000m
+          limits:
+            memory: 8Gi
+            cpu: 2000m
+
+
