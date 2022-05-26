@@ -1,3 +1,1 @@
-
-kubectl delete $(kubectl get pv -o name)
-
+kubectl delete $(kubectl get pv -o name )
