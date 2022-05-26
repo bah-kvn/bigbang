@@ -128,7 +128,7 @@ addons:
         -----END PRIVATE KEY-----
     values:
       autoInit:
-        enabled: true
+        enabled: false
       global:
         tlsDisable: false
       injector:
@@ -192,6 +192,9 @@ addons:
           requests:
             cpu: 2000m
             memory: 8Gi
+      ui:
+        activeVaultPodOnly: true
+        enabled: true
 clusterAuditor:
   enabled: false
 domain: dev.bahsoftwarefactory.com
