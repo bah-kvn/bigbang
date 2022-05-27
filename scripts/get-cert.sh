@@ -13,7 +13,7 @@ mkdir -p /tmp/certbot
                             --non-interactive \
                             --agree-tos \
                             --email hansen_kevin@bah.com \
-                              -d "*.dev.bahsoftwarefactory.com" \
+                              -d "*.stg.bahsoftwarefactory.com" \
                               --work-dir /tmp/certbot \
                               --config-dir /tmp/certbot
 

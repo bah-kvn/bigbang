@@ -1,7 +1,7 @@
 
 source $SCRIPTS/env/uip-api.sh
 export LB=$(kubectl get service/public-ingressgateway -o yaml -n istio-system | yq '.status.loadBalancer.ingress[].hostname')
-export URL=${1-"*.dev.bahsoftwarefactory.com"}
+export URL=${1-"*.stg.bahsoftwarefactory.com"}
 
 
 echo "Retrieve UIP Security Token"
