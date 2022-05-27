@@ -14,7 +14,7 @@ istio:
       kubernetesResourceSpec:
         serviceAnnotations:
           service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/c-m-n6rc24wl=owned,env=development,ingress-type=passthrough"
-          service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:729651203190:certificate/b60f4149-2478-4185-af71-dc0ebc6c5c0d"
+          service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:729651203190:certificate/625ea41a-a46e-478a-9618-4a2090684d7a"
           service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
           service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-08942469f925d9b66,subnet-04987f9522e27a836,subnet-069fd7685cca4018a"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
@@ -116,7 +116,7 @@ twistlock:
         size: 256Mi
 addons:
   vault:
-    enabled: false
+    enabled: true
     git:
       tag: "0.20.0-bb.0"
     values:
@@ -126,7 +126,7 @@ addons:
         tlsDisable: false
       injector:
         extraEnvironmentVars:
-          AGENT_INJECT_VAULT_ADDR: "https://vault.bahsoftwarefactory.com"
+          AGENT_INJECT_VAULT_ADDR: "https://vault.stg.bahsoftwarefactory.com"
       ui:
         enabled: true
       server:
@@ -138,7 +138,7 @@ addons:
             memory: 8Gi
             cpu: 2000m
         extraEnvironmentVars:
-          VAULT_API_ADDR: https://vault.bahsoftwarefactory.com
+          VAULT_API_ADDR: https://vault.stg.bahsoftwarefactory.com
           VAULT_ADDR: https://127.0.0.1:8200
           VAULT_SKIP_VERIFY: "true"
           VAULT_LOG_FORMAT: "json"
@@ -163,19 +163,19 @@ addons:
                   leader_api_addr = "https://vault-vault-0.vault-vault-internal:8200"
                   leader_client_cert_file = "/vault/tls/tls.crt"
                   leader_client_key_file = "/vault/tls/tls.key"
-                  leader_tls_servername = "vault.bahsoftwarefactory.com"
+                  leader_tls_servername = "vault.stg.bahsoftwarefactory.com"
                 }
                 retry_join {
                   leader_api_addr = "https://vault-vault-1.vault-vault-internal:8200"
                   leader_client_cert_file = "/vault/tls/tls.crt"
                   leader_client_key_file = "/vault/tls/tls.key"
-                  leader_tls_servername = "vault.bahsoftwarefactory.com"
+                  leader_tls_servername = "vault.stg.bahsoftwarefactory.com"
                 }
                 retry_join {
                   leader_api_addr = "https://vault-vault-2.vault-vault-internal:8200"
                   leader_client_cert_file = "/vault/tls/tls.crt"
                   leader_client_key_file = "/vault/tls/tls.key"
-                  leader_tls_servername = "vault.bahsoftwarefactory.com"
+                  leader_tls_servername = "vault.stg.bahsoftwarefactory.com"
                 }
               }
               telemetry {
