@@ -66,7 +66,7 @@ logging:
           cpu: 200m
           memory: 512Mi
 monitoring:
-  enabled: false
+  enabled: true
   values:
     prometheus:
       prometheusSpec:
