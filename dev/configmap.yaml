@@ -126,7 +126,7 @@ addons:
         tlsDisable: false
       injector:
         extraEnvironmentVars:
-          AGENT_INJECT_VAULT_ADDR: "https://vault.stg.bahsoftwarefactory.com"
+          AGENT_INJECT_VAULT_ADDR: "https://vault.bahsoftwarefactory.com"
       ui:
         enabled: true
       server:
@@ -138,7 +138,7 @@ addons:
             memory: 8Gi
             cpu: 2000m
         extraEnvironmentVars:
-          VAULT_API_ADDR: https://vault.stg.bahsoftwarefactory.com
+          VAULT_API_ADDR: https://vault.bahsoftwarefactory.com
           VAULT_ADDR: https://127.0.0.1:8200
           VAULT_SKIP_VERIFY: "true"
           VAULT_LOG_FORMAT: "json"
@@ -163,19 +163,19 @@ addons:
                   leader_api_addr = "https://vault-vault-0.vault-vault-internal:8200"
                   leader_client_cert_file = "/vault/tls/tls.crt"
                   leader_client_key_file = "/vault/tls/tls.key"
-                  leader_tls_servername = "vault.stg.bahsoftwarefactory.com"
+                  leader_tls_servername = "vault.bahsoftwarefactory.com"
                 }
                 retry_join {
                   leader_api_addr = "https://vault-vault-1.vault-vault-internal:8200"
                   leader_client_cert_file = "/vault/tls/tls.crt"
                   leader_client_key_file = "/vault/tls/tls.key"
-                  leader_tls_servername = "vault.stg.bahsoftwarefactory.com"
+                  leader_tls_servername = "vault.bahsoftwarefactory.com"
                 }
                 retry_join {
                   leader_api_addr = "https://vault-vault-2.vault-vault-internal:8200"
                   leader_client_cert_file = "/vault/tls/tls.crt"
                   leader_client_key_file = "/vault/tls/tls.key"
-                  leader_tls_servername = "vault.stg.bahsoftwarefactory.com"
+                  leader_tls_servername = "vault.bahsoftwarefactory.com"
                 }
               }
               telemetry {
