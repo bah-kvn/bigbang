@@ -108,7 +108,7 @@ twistlock:
         size: 256Mi
 addons:
   vault:
-    enabled: false
+    enabled: true
     git:
       tag: "0.20.0-bb.0"
     values:
