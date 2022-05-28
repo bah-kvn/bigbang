@@ -31,6 +31,6 @@ spec:
       - vault.stg.bahsoftwarefactory.com
     route:
     - destination:
-        host: vault-vault.vault.svc.cluster.local
+        host: vault-vault-active.vault.svc.cluster.local
         port:
           number: 8200
