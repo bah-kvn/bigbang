@@ -15,4 +15,6 @@ openssl x509 -in /tmp/addons_vault_ingress_cert.cert -text | grep 'Subject: CN='
 echo
 
 
-
+echo verify vault config
+echo "https://repo1.dso.mil/platform-one/big-bang/apps/sandbox/vault/-/blob/main/docs/production-ha.md"
+sops -d base/secrets.enc.yaml | yq '.stringData."values.yaml"' | yq '.addons.vault.ingress'
