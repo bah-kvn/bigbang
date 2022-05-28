@@ -17,20 +17,20 @@ spec:
   gateways:
   - istio-system/passthrough
   hosts:
-  - vault.bahsoftwarefactory.com
+  - vault.stg.bahsoftwarefactory.com
   http:
   - route:
     - destination:
-        host: vault-vault-active.vault.svc.cluster.local
+        host: vault-vault.vault.svc.cluster.local
         port:
           number: 8200
   tls:
   - match:
     - port: 8443
       sniHosts:
-      - vault.bahsoftwarefactory.com
+      - vault.stg.bahsoftwarefactory.com
     route:
     - destination:
-        host: vault-vault-active.vault.svc.cluster.local
+        host: vault-vault.vault.svc.cluster.local
         port:
-          number: 8200
+          number: 8201
