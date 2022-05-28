@@ -33,4 +33,4 @@ spec:
     - destination:
         host: vault-vault.vault.svc.cluster.local
         port:
-          number: 8201
+          number: 8200
