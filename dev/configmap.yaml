@@ -1,6 +1,6 @@
 domain: stg.bahsoftwarefactory.com
 istio:
-  enabled: false
+  enabled: true
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -24,11 +24,11 @@ istio:
       tls:
         mode: "PASSTHROUGH"
 istiooperator:
-  enabled: false
+  enabled: true
 kiali:
-  enabled: false
+  enabled: true
 jaeger:
-  enabled: false
+  enabled: true
 eckoperator:
   enabled: false
 flux:
@@ -62,7 +62,7 @@ logging:
           cpu: 200m
           memory: 512Mi
 monitoring:
-  enabled: false
+  enabled: true
   values:
     prometheus:
       prometheusSpec:
@@ -110,7 +110,7 @@ twistlock:
         size: 256Mi
 addons:
   vault:
-    enabled: false
+    enabled: true
     git:
       tag: "0.20.0-bb.0"
     values:
