@@ -109,6 +109,86 @@ twistlock:
       persistence:
         size: 256Mi
 addons:
+  gitlab:
+    enabled: false
+    flux:
+      timeout: 30m
+      upgrade:
+        remediation:
+          retries: 8
+    hostnames:
+      gitlab: gitlab
+      registry: gitlab-registry
+    values:
+      gitlab:
+        webservice:
+          minReplicas: 1
+          maxReplicas: 1
+          helmTests:
+            enabled: false
+          resources:
+            limits:
+              cpu: 2
+              memory: 4G
+            requests:
+              cpu: 2
+              memory: 4G
+        gitaly:
+          resources:
+            limits:
+              cpu: 2
+              memory: 4G
+            requests:
+              cpu: 2
+              memory: 4G
+        gitlab-shell:
+          minReplicas: 1
+          maxReplicas: 1
+        sidekiq:
+          minReplicas: 1
+          maxReplicas: 1
+      registry:
+        hpa:
+          minReplicas: 1
+          maxReplicas: 1
+      global:
+        extraEnvFrom:
+          OAUTH_GITHUB_API_KEY:
+            secretKeyRef:
+              name: github-oauth
+              key: key
+          OAUTH_GITHUB_APP_SECRET:
+            secretKeyRef:
+              name: github-oauth
+              key: secret
+          OAUTH_GITHUB_URL:
+            secretKeyRef:
+              name: github-oauth
+              key: url
+        appConfig:
+          object_store:
+            enabled: true
+          defaultCanCreateGroup: true
+          enableUsagePing: true
+          enableImpersonation: true
+          defaultTheme: 11
+          defaultProjectsFeatures:
+            issues: true
+            mergeRequests: true
+            wiki: true
+            snippets: true
+            builds: true
+            containerRegistry: true
+          omniauth:
+            enabled: true
+            allowSingleSignOn: ['github']
+            autoLinkUser: true
+            autoSignInWithProvider: 'github'
+            syncProfileFromProvider: ['github']
+            syncProfileAttributes: ['name', 'email']
+            blockAutoCreatedUsers: false
+            providers:
+              - secret: github
   vault:
     enabled: true
     git:
