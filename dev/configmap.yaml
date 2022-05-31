@@ -109,6 +109,9 @@ twistlock:
       persistence:
         size: 256Mi
 addons:
+  gitlabRunner:
+    enabled: true
+
   gitlab:
     enabled: true
     flux:
