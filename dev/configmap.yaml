@@ -116,10 +116,10 @@ addons:
       gateway: "passthrough"
 
   gitlabRunner:
-    enabled: false
+    enabled: true
 
   gitlab:
-    enabled: false
+    enabled: true
     flux:
       timeout: 45m
       upgrade:
