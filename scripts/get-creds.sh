@@ -1,5 +1,8 @@
 
 echo " Kiali token: >$(kubectl get secret -n kiali -o go-template='{{range $secret := .items}}{{with $secret.metadata.annotations}}{{with (index . "kubernetes.io/service-account.name")}}{{if eq . "kiali-service-account"}}{{$secret.data.token | base64decode}}{{end}}{{end}}{{end}}{{end}}')<"
+echo
+echo 'gitlab' 
+kubectl get secret gitlab-gitlab-initial-root-password -n gitlab -o yaml | yq '.data.password' | base64 -d
 
 #Packages With Built in Authentication
 #The applications in the table below provide both SSO and built in auth. The table gives default credentials and ways to access and/or override those.
