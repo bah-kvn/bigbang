@@ -112,10 +112,10 @@ addons:
   gitlab:
     enabled: false
     flux:
-      timeout: 30m
+      timeout: 45m
       upgrade:
         remediation:
-          retries: 8
+          retries: 10
     hostnames:
       gitlab: gitlab
       registry: gitlab-registry
