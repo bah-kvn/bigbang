@@ -116,10 +116,10 @@ addons:
       gateway: "passthrough"
 
   gitlabRunner:
-    enabled: true
+    enabled: false
 
   gitlab:
-    enabled: true
+    enabled: false
     flux:
       timeout: 45m
       upgrade:
@@ -192,7 +192,6 @@ addons:
             enabled: true
             allowSingleSignOn: ['github']
             autoLinkUser: true
-            autoSignInWithProvider: 'github'
             syncProfileFromProvider: ['github']
             syncProfileAttributes: ['name', 'email']
             blockAutoCreatedUsers: false
