@@ -109,6 +109,12 @@ twistlock:
       persistence:
         size: 256Mi
 addons:
+
+  keycloak:
+    enabled: true
+    ingress:
+      gateway: "passthrough"
+
   gitlabRunner:
     enabled: true
 
