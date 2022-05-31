@@ -110,7 +110,7 @@ twistlock:
         size: 256Mi
 addons:
   gitlab:
-    enabled: false
+    enabled: true
     flux:
       timeout: 30m
       upgrade:
