@@ -4,8 +4,8 @@ kubectl delete -n gitlab secret github
 cat<<EOF >  ./provider.yaml
 name: github
 label: github
-app_id: '724b6aa134a8df16502c'
-app_secret: '6a2483fa78ad13cf9ea6781beb48876c0d5b6219'
+app_id: 'ace7f939b8f8bd8248af'
+app_secret: '3d257c8caa3e496ae433705681d1c2161e1baaac'
 args:
   scope: "user,read:org"
 EOF
