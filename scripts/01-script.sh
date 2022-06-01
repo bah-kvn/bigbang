@@ -185,6 +185,6 @@ and use the following values to deploy your dev cluster:
 6 - Select Cloud Provider - Amazon
 7 - Unselect NGINX Ingress
 8 - Update variables.conf 
-  YOUR_SG_ID="$SG_ID"
-  YOUR_CLUSTER_VALUE="< value from Mgmt Cluster in Related Resources tab of your new cluster >"
+  YOUR_SG_ID='$SG_ID'
+  YOUR_CLUSTER_VALUE='< value from Mgmt Cluster in Related Resources tab of your new cluster >'
 "
