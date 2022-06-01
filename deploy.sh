@@ -17,7 +17,7 @@ kubectl get -n flux-system deployment.apps/kustomize-controller
 kubectl get -n flux-system deployment.apps/notification-controller
 kubectl get -n flux-system deployment.apps/source-controller
 
-kubectl apply -f dev/bigbang.yaml
+kubectl apply -f stg/bigbang.yaml
 
 watch kubectl get gitrepositories,kustomizations,hr,po -A
 
