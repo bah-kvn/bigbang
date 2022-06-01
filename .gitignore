@@ -21,3 +21,4 @@ x.yaml
 refresh-istio.sh
 private-registry.sh
 istio-formatted.yaml
+00-variables.conf
