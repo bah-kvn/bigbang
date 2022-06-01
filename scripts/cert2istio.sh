@@ -1,6 +1,6 @@
 
 
-export CERTS="/Users/keithhansen/certs/dev.bahsoftwarefactory.com"
+export CERTS="/Users/keithhansen/certs/stg.bahsoftwarefactory.com"
 
 export ISTIO_KEY=$(cat $CERTS/privkey.pem | sed "s/^/              /g")
 export ISTIO_CERT=$(cat $CERTS/cert.pem | sed "s/^/              /g")

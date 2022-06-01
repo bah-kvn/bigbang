@@ -11,13 +11,13 @@ kubectl -n flux-system \
   --docker-password=${REGISTRY1_PASSWORD} 
 kubectl create secret generic private-git --from-literal=username=$GHCSN_USERNAME --from-literal=password=$GHCSN_PASSWORD --namespace bigbang
 
-kustomize build "https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/flux?ref=1.31.0" | kubectl apply -f -
+kustomize build "https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/flux?ref=1.34.0" | kubectl apply -f -
 kubectl get -n flux-system deployment.apps/helm-controller
 kubectl get -n flux-system deployment.apps/kustomize-controller
 kubectl get -n flux-system deployment.apps/notification-controller
 kubectl get -n flux-system deployment.apps/source-controller
 
-kubectl apply -f dev/bigbang.yaml
+kubectl apply -f stg/bigbang.yaml
 
 watch kubectl get gitrepositories,kustomizations,hr,po -A
 

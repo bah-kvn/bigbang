@@ -1,0 +1,247 @@
+
+a20e65db71aa1458f88075276d82cf5d-aea13f718779acf1.elb.us-east-1.amazonaws.com
+arn = arn:aws:elasticloadbalancing:us-east-1:729651203190:loadbalancer/net/a20e65db71aa1458f88075276d82cf5d/aea13f718779acf1
+{
+    "LoadBalancers": [
+        {
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:loadbalancer/net/a20e65db71aa1458f88075276d82cf5d/aea13f718779acf1",
+            "DNSName": "a20e65db71aa1458f88075276d82cf5d-aea13f718779acf1.elb.us-east-1.amazonaws.com",
+            "CanonicalHostedZoneId": "Z26RNL4JYFTOTI",
+            "CreatedTime": "2022-05-29T13:27:14.147000+00:00",
+            "LoadBalancerName": "a20e65db71aa1458f88075276d82cf5d",
+            "Scheme": "internet-facing",
+            "VpcId": "vpc-023a468241eea5b0b",
+            "State": {
+                "Code": "active"
+            },
+            "Type": "network",
+            "AvailabilityZones": [
+                {
+                    "ZoneName": "us-east-1b",
+                    "SubnetId": "subnet-04987f9522e27a836",
+                    "LoadBalancerAddresses": []
+                },
+                {
+                    "ZoneName": "us-east-1a",
+                    "SubnetId": "subnet-08942469f925d9b66",
+                    "LoadBalancerAddresses": []
+                },
+                {
+                    "ZoneName": "us-east-1c",
+                    "SubnetId": "subnet-069fd7685cca4018a",
+                    "LoadBalancerAddresses": []
+                }
+            ],
+            "IpAddressType": "ipv4"
+        }
+    ]
+}
+{
+    "Attributes": [
+        {
+            "Key": "access_logs.s3.enabled",
+            "Value": "false"
+        },
+        {
+            "Key": "access_logs.s3.prefix",
+            "Value": ""
+        },
+        {
+            "Key": "deletion_protection.enabled",
+            "Value": "false"
+        },
+        {
+            "Key": "access_logs.s3.bucket",
+            "Value": ""
+        },
+        {
+            "Key": "load_balancing.cross_zone.enabled",
+            "Value": "true"
+        }
+    ]
+}
+{
+    "Listeners": [
+        {
+            "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:listener/net/a20e65db71aa1458f88075276d82cf5d/aea13f718779acf1/310db7eee2145cac",
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:loadbalancer/net/a20e65db71aa1458f88075276d82cf5d/aea13f718779acf1",
+            "Port": 443,
+            "Protocol": "TCP",
+            "DefaultActions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-passthro-a0ad6a50e5/c90cb78bd877759a",
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-passthro-a0ad6a50e5/c90cb78bd877759a"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:listener/net/a20e65db71aa1458f88075276d82cf5d/aea13f718779acf1/4cbde8854040b4c9",
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:loadbalancer/net/a20e65db71aa1458f88075276d82cf5d/aea13f718779acf1",
+            "Port": 80,
+            "Protocol": "TCP",
+            "DefaultActions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-passthro-a9031b92d9/9d23c5febcede10f",
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-passthro-a9031b92d9/9d23c5febcede10f"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:listener/net/a20e65db71aa1458f88075276d82cf5d/aea13f718779acf1/feec3b34947e49d5",
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:loadbalancer/net/a20e65db71aa1458f88075276d82cf5d/aea13f718779acf1",
+            "Port": 15021,
+            "Protocol": "TCP",
+            "DefaultActions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-passthro-b8b041c621/eb583c11873259bf",
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-passthro-b8b041c621/eb583c11873259bf"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+a97ccc6f8ea7043c8a1c8a45d247c0d0-eb8ee429aed82129.elb.us-east-1.amazonaws.com
+arn = arn:aws:elasticloadbalancing:us-east-1:729651203190:loadbalancer/net/a97ccc6f8ea7043c8a1c8a45d247c0d0/eb8ee429aed82129
+{
+    "LoadBalancers": [
+        {
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:loadbalancer/net/a97ccc6f8ea7043c8a1c8a45d247c0d0/eb8ee429aed82129",
+            "DNSName": "a97ccc6f8ea7043c8a1c8a45d247c0d0-eb8ee429aed82129.elb.us-east-1.amazonaws.com",
+            "CanonicalHostedZoneId": "Z26RNL4JYFTOTI",
+            "CreatedTime": "2022-05-29T13:27:17.803000+00:00",
+            "LoadBalancerName": "a97ccc6f8ea7043c8a1c8a45d247c0d0",
+            "Scheme": "internet-facing",
+            "VpcId": "vpc-023a468241eea5b0b",
+            "State": {
+                "Code": "active"
+            },
+            "Type": "network",
+            "AvailabilityZones": [
+                {
+                    "ZoneName": "us-east-1b",
+                    "SubnetId": "subnet-04987f9522e27a836",
+                    "LoadBalancerAddresses": []
+                },
+                {
+                    "ZoneName": "us-east-1a",
+                    "SubnetId": "subnet-08942469f925d9b66",
+                    "LoadBalancerAddresses": []
+                },
+                {
+                    "ZoneName": "us-east-1c",
+                    "SubnetId": "subnet-069fd7685cca4018a",
+                    "LoadBalancerAddresses": []
+                }
+            ],
+            "IpAddressType": "ipv4"
+        }
+    ]
+}
+{
+    "Attributes": [
+        {
+            "Key": "access_logs.s3.enabled",
+            "Value": "false"
+        },
+        {
+            "Key": "access_logs.s3.prefix",
+            "Value": ""
+        },
+        {
+            "Key": "deletion_protection.enabled",
+            "Value": "false"
+        },
+        {
+            "Key": "access_logs.s3.bucket",
+            "Value": ""
+        },
+        {
+            "Key": "load_balancing.cross_zone.enabled",
+            "Value": "false"
+        }
+    ]
+}
+{
+    "Listeners": [
+        {
+            "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:listener/net/a97ccc6f8ea7043c8a1c8a45d247c0d0/eb8ee429aed82129/22b46c455ea71678",
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:loadbalancer/net/a97ccc6f8ea7043c8a1c8a45d247c0d0/eb8ee429aed82129",
+            "Port": 15021,
+            "Protocol": "TCP",
+            "DefaultActions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-publicin-6c9645ab8b/364987e18f4c1298",
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-publicin-6c9645ab8b/364987e18f4c1298"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:listener/net/a97ccc6f8ea7043c8a1c8a45d247c0d0/eb8ee429aed82129/9f5a24a8acae415e",
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:loadbalancer/net/a97ccc6f8ea7043c8a1c8a45d247c0d0/eb8ee429aed82129",
+            "Port": 443,
+            "Protocol": "TCP",
+            "DefaultActions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-publicin-87bdfd2bb1/df8118571832a2c5",
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-publicin-87bdfd2bb1/df8118571832a2c5"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "ListenerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:listener/net/a97ccc6f8ea7043c8a1c8a45d247c0d0/eb8ee429aed82129/d72c1eacfdf905c3",
+            "LoadBalancerArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:loadbalancer/net/a97ccc6f8ea7043c8a1c8a45d247c0d0/eb8ee429aed82129",
+            "Port": 80,
+            "Protocol": "TCP",
+            "DefaultActions": [
+                {
+                    "Type": "forward",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-publicin-c1e9d1d583/5893dd03698d5084",
+                    "ForwardConfig": {
+                        "TargetGroups": [
+                            {
+                                "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:729651203190:targetgroup/k8s-istiosys-publicin-c1e9d1d583/5893dd03698d5084"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
+

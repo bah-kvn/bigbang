@@ -21,4 +21,5 @@ x.yaml
 refresh-istio.sh
 private-registry.sh
 istio-formatted.yaml
+bigvang.values
 00-variables.conf
