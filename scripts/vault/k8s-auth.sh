@@ -1,18 +1,25 @@
 #!/bin/bash
 
-
+source $SCRIPTS/env/stg-vault-env.sh
 vault secrets disable internal
 vault auth disable kubernetes
+vault secrets disable kv-v2
 
 vault auth enable kubernetes
 vault secrets enable -path=bigbang kv-v2
 
-source $SCRIPTS/env/stg-vault-env.sh
-kubectl -n vault exec vault-vault-0 -i -t -- sh -c "export VAULT_TOKEN=$VAULT_ROOT_TOKEN; \
-  vault write auth/kubernetes/config \
-    token_reviewer_jwt=\"\$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)\" \
-    kubernetes_host=\"https://\$KUBERNETES_PORT_443_TCP_ADDR:443\" \
-    kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt "
+export token=$(kubectl -n vault exec vault-vault-0 -i -t -- sh -c "cat /var/run/secrets/kubernetes.io/serviceaccount/token")
+export hostname=$(kubectl -n vault exec vault-vault-0 -i -t -- sh -c "echo \$KUBERNETES_PORT_443_TCP_ADDR")
+export ca_cert=$(kubectl -n vault exec vault-vault-0 -i -t -- sh -c "cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt")
+export issuer="$(echo '{"apiVersion": "authentication.k8s.io/v1", "kind": "TokenRequest"}' | \
+kubectl create -f- --raw /api/v1/namespaces/default/serviceaccounts/default/token | jq -r '.status.token' | cut -d . -f2  | base64 -d ; echo ' }' )"
+export issuer=$( echo $issuer | jq ".iss" )
+
+vault write auth/kubernetes/config \
+     token_reviewer_jwt="$token" \
+     kubernetes_host="$hostname" \
+     kubernetes_ca_cert="$ca_cert" \
+     issuer="$issuer"
 
 vault kv put bigbang/gitlab/testsecret username="bbuser1" password="password1"
 vault kv get bigbang/gitlab/testsecret
