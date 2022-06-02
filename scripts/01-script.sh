@@ -10,7 +10,7 @@
 ##############
 
 # Getting your public ip
-YOUR_IP=$(curl ifconfig.me)
+YOUR_IP=$(curl -s ifconfig.me)
 
 ## Loading creds
 export AWS_PROFILE=$AWSAML_PROFILE
@@ -41,7 +41,11 @@ FP=$(gpg --list-keys --fingerprint | grep "bigbang-dev-environment" -B 1 | grep 
 # This ensures your secrets are only decryptable by your key
 
 ## On MacOS
-sed -i '' 's|pgp: FALSE_KEY_HERE|pgp: '$FP'|g' .sops.yaml
+sed -i '' "s|pgp: FALSE_KEY_HERE|pgp: ""$FP""|g" .sops.yaml
+
+if [ $? -ne "0" ]; then
+  echo "No Sops yaml file, or wrong key (bad clean-up)"; exit 1
+fi
 
 #########################
 ## SSL cert generation ##
@@ -91,6 +95,11 @@ EOF
 # Encrypt the existing certificate and Ironbank creds
 sops -e -i base/secrets.enc.yaml
 
+grep "PRIVATE KEY" base/secrets.enc.yaml
+if [ $? -eq "0" ]; then
+  echo "Secrets not encrypted"; exit 1
+fi
+
 # Change Configmap
 sed -i '' 's|bigbang.dev|'$YOUR_SUBDOMAIN.bahsoftwarefactory.com'|g' dev/configmap.yaml
 
@@ -112,12 +121,17 @@ aws ec2 authorize-security-group-ingress \
     --no-cli-pager
 
 ## Create your Security group
-SG_ID=$(aws ec2 create-security-group \
+aws ec2 create-security-group \
     --group-name "$YOURNAME-rancher-nodes" \
     --description "$YOURNAME-rancher-nodes" \
     --vpc-id vpc-023a468241eea5b0b \
     --region us-east-1 \
-    --no-cli-pager | jq '.GroupId' | sed 's/"//g')
+    --no-cli-pager
+
+SG_ID=$(aws ec2 describe-security-groups \
+    --filters Name=vpc-id,Values=vpc-023a468241eea5b0b \
+    Name=group-name,Values="$YOURNAME-rancher-nodes" \
+    --query 'SecurityGroups[*].[GroupId]' --output text)
 
 ## Adding IP to your cluster SG
 aws ec2 authorize-security-group-ingress \
@@ -143,6 +157,7 @@ git commit -m "chore: update default encryption key"
 git add base/secrets.enc.yaml
 git commit -m "chore: add tls certificate and iron bank pull credentials"
 git add dev/bigbang.yaml
+git add dev/configmap.yaml
 git commit -m "chore: updated git repo"
 
 git push -u origin $YOUR_GIT_BRANCH
@@ -154,18 +169,22 @@ git push -u origin $YOUR_GIT_BRANCH
 
 echo "
 Proceed to https://rancher.bahsoftwarefactory.com/dashboard/c/_/manager/provisioning.cattle.io.cluster/create
-and use the following values to deploy yout dev cluster:
-1 - Security group:
+and use the following values to deploy your dev cluster:
+1 - Add a Cluster Name
+2 - Security group:
   name: '$YOURNAME-rancher-nodes'
   id: '$SG_ID'
-2 - Use the following subnets:
+3 - Use the following subnets:
   AZ A - subnet-08942469f925d9b66 (10.40.7.0/24)
   AZ B - subnet-04987f9522e27a836 (10.40.8.0/24)
   AZ C - subnet-069fd7685cca4018a (10.40.9.0/24)
-3 - Use the EC2 Instance role:
+4 - Use the EC2 Instance role:
   BSF_RKE2_ControlPlane_Role
-4 - Use the AMI:
+5 - Use the AMI:
   ami-0017560e0ce9d6fbf
-5 - Select Cloud Provider - Amazon
-6 - UN-Select NGINX Ingress
+6 - Select Cloud Provider - Amazon
+7 - Unselect NGINX Ingress
+8 - Update variables.conf 
+  YOUR_SG_ID='$SG_ID'
+  YOUR_CLUSTER_VALUE='< value from Mgmt Cluster in Related Resources tab of your new cluster >'
 "

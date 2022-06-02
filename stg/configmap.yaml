@@ -109,13 +109,11 @@ twistlock:
       persistence:
         size: 256Mi
 addons:
+
   keycloak:
     enabled: true
     ingress:
       gateway: "passthrough"
-#     Additional keycloak config in secrets.enc.yaml
-#     key: key-data
-#     cert: cert-data 
 
   gitlabRunner:
     enabled: true
