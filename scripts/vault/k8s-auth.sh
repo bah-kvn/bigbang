@@ -1,9 +1,9 @@
 #!/bin/bash
 
-source $SCRIPTS/env/stg-vault-env.sh
-vault secrets disable internal
-vault auth disable kubernetes
-vault secrets disable kv-v2
+#source $SCRIPTS/env/stg-vault-env.sh
+#vault secrets disable internal
+#vault auth disable kubernetes
+#vault secrets disable kv-v2
 
 vault auth enable kubernetes
 vault secrets enable -path=bigbang kv-v2
