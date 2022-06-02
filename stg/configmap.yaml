@@ -201,7 +201,7 @@ addons:
       tag: "0.20.0-bb.0"
     values:
       autoInit:
-        enabled: false
+        enabled: true
       global:
         tlsDisable: false
       injector:
