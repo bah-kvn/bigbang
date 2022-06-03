@@ -199,7 +199,7 @@ addons:
   vault:
     enabled: true
     git:
-      tag: "0.20.0-bb.0"
+      tag: "0.20.0-bb.1"
     values:
       autoInit:
         enabled: true
