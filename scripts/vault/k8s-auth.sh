@@ -1,9 +1,10 @@
 #!/bin/bash
 
-#source $SCRIPTS/env/stg-vault-env.sh
-#vault secrets disable internal
-#vault auth disable kubernetes
-#vault secrets disable kv-v2
+source $SCRIPTS/env/stg-vault-env.sh
+kubectl -n mynamespace delete sa internal-app
+vault secrets disable internal
+vault auth disable kubernetes
+vault secrets disable kv-v2
 
 vault auth enable kubernetes
 vault secrets enable -path=bigbang kv-v2
@@ -28,11 +29,11 @@ path "bigbang/data/gitlab/testsecret" {
   capabilities = ["read"]
 }
 EOF
-vault write auth/kubernetes/role/internal-app bound_service_account_names=internal-app bound_service_account_namespaces=mynamespace policies=internal-app ttl=24h
+vault write auth/kubernetes/role/internal-app bound_service_account_names='internal-app' bound_service_account_namespaces='mynamespace' policies='internal-app' ttl=24h
 
-kubectl create ns mynamespace
-kubectl -n mynamespace create sa internal-app
-kubectl get secret -n flux-system private-registry -o yaml | kubectl neat | yq '.metadata.namespace = "mynamespace"' | kubectl apply -n mynamespace -f -
+
+kubectl -n mynamespace create sa 'internal-app'
+kubectl get secret -n flux-system private-registry -o yaml | kubectl neat | yq ".metadata.namespace = 'mynamespace'" | kubectl apply -n mynamespace -f -
 
 tee /tmp/full_deploy.yaml <<EOF 
 apiVersion: apps/v1
@@ -54,9 +55,10 @@ spec:
         vault.hashicorp.com/agent-inject: 'true'
         vault.hashicorp.com/agent-init-first: 'true'
         vault.hashicorp.com/role: 'internal-app'
+        vault.hashicorp.com/namespace: 'mynamespace'
         vault.hashicorp.com/agent-inject-secret-testsecret: 'bigbang/data/gitlab/testsecret'
     spec:
-      serviceAccountName: internal-app
+      serviceAccountName: 'internal-app'
       imagePullSecrets:
         - name: private-registry
       containers:
@@ -68,5 +70,5 @@ spec:
 EOF
 
 kubectl apply -n mynamespace -f /tmp/full_deploy.yaml
-kubectl exec -i -t $(kubectl  get po -n mynamespace -o name) -n mynamespace -- cat /vault/secrets/testsecret
+#kubectl exec -i -t $(kubectl  get po -n default -o name) -n default -- cat /vault/secrets/testsecret
 kubectl logs -n vault -l app.kubernetes.io/name=vault-agent-injector
