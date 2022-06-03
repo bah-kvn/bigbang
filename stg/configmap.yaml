@@ -211,6 +211,19 @@ addons:
       ui:
         enabled: true
       server:
+        volumes:
+        - name: tls
+          secret:
+            secretName: vault-tls
+        volumeMounts:
+        - name: tls
+          mountPath: "/vault/tls"
+          readOnly: true
+        dataStorage:
+          enabled: true
+          size: 50Gi
+          mountPath: "/vault/data"
+          accessMode: ReadWriteOnce
         resources:
           requests:
             memory: 8Gi

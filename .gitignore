@@ -24,3 +24,4 @@ istio-formatted.yaml
 bigvang.values
 00-variables.conf
 bigbang.values
+k8s-auth-example.sh
