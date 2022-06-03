@@ -196,7 +196,7 @@ addons:
             providers:
               - secret: github
   vault:
-    enabled: true
+    enabled: false
     git:
       tag: "0.20.0-bb.0"
     values:
