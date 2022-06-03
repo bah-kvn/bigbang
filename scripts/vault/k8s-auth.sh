@@ -1,10 +1,9 @@
 #!/bin/bash
 
 source $SCRIPTS/env/stg-vault-env.sh
-kubectl -n mynamespace delete sa internal-app
-vault secrets disable internal
-vault auth disable kubernetes
-vault secrets disable kv-v2
+#vault secrets disable internal
+#vault auth disable kubernetes
+#vault secrets disable kv-v2
 
 vault auth enable kubernetes
 vault secrets enable -path=bigbang kv-v2
