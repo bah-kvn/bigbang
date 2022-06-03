@@ -1,3 +1,4 @@
+
 domain: stg.bahsoftwarefactory.com
 istio:
   enabled: true
