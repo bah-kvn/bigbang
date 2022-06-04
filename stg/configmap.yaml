@@ -197,7 +197,7 @@ addons:
             providers:
               - secret: github
   vault:
-    enabled: false
+    enabled: true
     git:
       tag: "0.20.0-bb.1"
     values:
@@ -208,8 +208,6 @@ addons:
       injector:
         extraEnvironmentVars:
           AGENT_INJECT_VAULT_ADDR: "https://vault.stg.bahsoftwarefactory.com"
-      ui:
-        enabled: true
       server:
         volumes:
         - name: tls
