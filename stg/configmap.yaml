@@ -231,6 +231,10 @@ addons:
           limits:
             memory: 8Gi
             cpu: 2000m
+
+        ingress:
+          enabled: false
+
         extraEnvironmentVars:
           VAULT_API_ADDR: https://vault.stg.bahsoftwarefactory.com
           VAULT_ADDR: https://127.0.0.1:8200
