@@ -27,7 +27,7 @@ istio:
       tls:
         mode: "PASSTHROUGH"
 istiooperator:
-  enabled: false
+  enabled: true
 kiali:
   enabled: false
 jaeger:
