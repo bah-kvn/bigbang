@@ -29,7 +29,7 @@ istio:
 istiooperator:
   enabled: true
 kiali:
-  enabled: true
+  enabled: false
 jaeger:
   enabled: false
 eckoperator:
