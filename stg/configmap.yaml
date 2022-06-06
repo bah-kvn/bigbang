@@ -202,7 +202,7 @@ addons:
               - secret: github
      
   vault:
-    enabled: false
+    enabled: true
 
     values:
       # disable autoInit. It should not be used for operations.
