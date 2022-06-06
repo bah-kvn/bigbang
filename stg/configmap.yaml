@@ -27,11 +27,11 @@ istio:
       tls:
         mode: "PASSTHROUGH"
 istiooperator:
-  enabled: true
+  enabled: false
 kiali:
-  enabled: true
+  enabled: false
 jaeger:
-  enabled: true
+  enabled: false
 eckoperator:
   enabled: false
 flux:
@@ -65,7 +65,7 @@ logging:
           cpu: 200m
           memory: 512Mi
 monitoring:
-  enabled: true
+  enabled: false
   values:
     prometheus:
       prometheusSpec:
@@ -114,15 +114,15 @@ twistlock:
 addons:
 
   keycloak:
-    enabled: true
+    enabled: false
     ingress:
       gateway: "passthrough"
 
   gitlabRunner:
-    enabled: true
+    enabled: false
 
   gitlab:
-    enabled: true
+    enabled: false
     flux:
       timeout: 45m
       upgrade:
@@ -256,6 +256,7 @@ addons:
                 cluster_address = "[::]:8201"
                 tls_cert_file = "/vault/tls/tls.crt"
                 tls_key_file  = "/vault/tls/tls.key"
+                tls_disable_client_certs = "true"
               }
               storage "raft" {
                 path = "/vault/data"
