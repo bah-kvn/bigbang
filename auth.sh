@@ -14,12 +14,12 @@ path "secret/data/myapp/*" {
     capabilities = ["read", "list"]
 }
 EOF
-vault kv delete secret/myapp/config
-vault kv put secret/myapp/config username='appuser' password='suP3rsec(et!' ttl='30s'
+
+vault kv put secret/data/myapp/config username='appuser' password='suP3rsec(et!' ttl='30s'
 export VAULT_SA_NAME=$(kubectl get sa vault-auth --output jsonpath="{.secrets[*]['name']}")
 export SA_JWT_TOKEN=$(kubectl get secret $VAULT_SA_NAME --output 'go-template={{ .data.token }}' | base64 --decode)
-#export SA_CA_CRT=$(kubectl config view --raw --minify --flatten --output 'jsonpath={.clusters[].cluster.certificate-authority-data}' | base64 --decode)
-export SA_CA_CRT=$(cat $HOME/.kube/staging.kc | yq '.clusters[].cluster.certificate-authority-data' | base64 -d)
+export SA_CA_CRT=$(kubectl config view --raw --minify --flatten --output 'jsonpath={.clusters[].cluster.certificate-authority-data}' | base64 --decode)
+#export SA_CA_CRT=$(cat $HOME/.kube/staging.kc | yq '.clusters[].cluster.certificate-authority-data' | base64 -d)
 export K8S_HOST=$(kubectl config view --raw --minify --flatten --output 'jsonpath={.clusters[].cluster.server}')
 echo "VAULT_SA_NAME = $VAULT_SA_NAME"
 echo "K8S_HOST = $K8S_HOST"

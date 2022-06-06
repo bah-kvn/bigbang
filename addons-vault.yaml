@@ -1,0 +1,99 @@
+addons:
+  vault:
+    enabled: true
+
+    values:
+      # disable autoInit. It should not be used for operations.
+      autoInit:
+        enabled: false
+
+      global:
+        # this is a double negative. Put "false" to enable TLS for passthrough ingress
+        tlsDisable: false
+
+      injector:
+        extraEnvironmentVars:
+          AGENT_INJECT_VAULT_ADDR: "https://vault.stg.bahsoftwarefactory.com"
+
+      server:
+        # Increase default resources
+        resources:
+          requests:
+            memory: 8Gi
+            cpu: 2000m
+          limits:
+            memory: 8Gi
+            cpu: 2000m
+
+        # disable the Vault provided ingress so that Istio ingress can be used.
+        ingress:
+          enabled: false
+
+        # Extra environment variable to support high availability
+        extraEnvironmentVars:
+          # the istio gateway domain
+          VAULT_API_ADDR: https://vault.stg.bahsoftwarefactory.com
+          VAULT_ADDR:  https://127.0.0.1:8200
+          VAULT_SKIP_VERIFY: "true"
+          VAULT_LOG_FORMAT: "json"
+          VAULT_LICENSE: "your-license-key-goes-here"
+
+        ha:
+          # enable high availability.
+          enabled: true
+          replicas: 3
+
+          # raft is the license free most simple solution for a distributed filesystem
+          raft:
+            enabled: true
+            setNodeId: true
+
+            # these values should be encrypted to prevent the kms_key_id from being revealed 
+            config: |
+              ui = true
+
+              listener "tcp" {
+                tls_disable = 0
+                address = "[::]:8200"
+                cluster_address = "[::]:8201"
+                tls_cert_file = "/vault/tls/tls.crt"
+                tls_key_file  = "/vault/tls/tls.key"
+              }
+
+              storage "raft" {
+                path = "/vault/data"
+
+                retry_join {
+                  leader_api_addr = "https://vault-vault-0.vault-vault-internal:8200"
+                  leader_client_cert_file = "/vault/tls/tls.crt"
+                  leader_client_key_file = "/vault/tls/tls.key"
+                  leader_tls_servername = "vault.stg.bahsoftwarefactory.com"
+                }
+        
+                retry_join {
+                  leader_api_addr = "https://vault-vault-1.vault-vault-internal:8200"
+                  leader_client_cert_file = "/vault/tls/tls.crt"
+                  leader_client_key_file = "/vault/tls/tls.key"
+                  leader_tls_servername = "vault.stg.bahsoftwarefactory.com"
+                }
+        
+                retry_join {
+                  leader_api_addr = "https://vault-vault-2.vault-vault-internal:8200"
+                  leader_client_cert_file = "/vault/tls/tls.crt"
+                  leader_client_key_file = "/vault/tls/tls.key"
+                  leader_tls_servername = "vault.stg.bahsoftwarefactory.com"
+                }
+              }
+              seal "awskms" {
+                region     = "us-east-1"
+                kms_key_id = "bde2b254-f04b-4f48-b5b4-4376120c5181"
+                endpoint   = "https://kms.us-east-1.amazonaws.com"
+              }
+              telemetry {
+                prometheus_retention_time = "24h"
+                disable_hostname = true
+                unauthenticated_metrics_access = true
+              }
+
+              service_registration "kubernetes" {}
+
