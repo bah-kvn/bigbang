@@ -141,7 +141,7 @@ sso:
 
 addons:
   keycloak:
-    enabled: true
+    enabled: false
     database:
       host: keycloak-dev.c4ie4j7le0jh.us-east-1.rds.amazonaws.com
       type: postgres
