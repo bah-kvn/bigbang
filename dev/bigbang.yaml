@@ -12,7 +12,7 @@ spec:
   interval: 1m
   url: https://github.boozallencsn.com/Solutions-Center/bigbang.git
   ref:
-    branch: sls/dev
+    branch: main
   secretRef:
     name: private-git
 ---
