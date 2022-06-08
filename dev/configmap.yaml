@@ -1,6 +1,9 @@
-domain: stg.bahsoftwarefactory.com
+domain: dev.bahsoftwarefactory.com
+
 istio:
   enabled: true
+  keycloak: 
+    enabled: true
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -108,9 +111,45 @@ twistlock:
     console:
       persistence:
         size: 256Mi
+
+sso:
+  oidc:
+    # -- Domain for keycloak used for configuring SSO
+    host: keycloak.dev.bahsoftwarefactory.com
+    # -- Keycloak realm containing clients
+    realm: bsf
+  # -- Keycloak's certificate authority (PEM Format). Entered using chomp modifier (see ./docs/example_configs/dev-sso-values.yaml for example). Used by authservice to support SSO for various packages
+  certificate_authority: ""
+
+  # -- Keycloak realm's json web key output, obtained at https://<keycloak-server>/auth/realms/<realm>/protocol/openid-connect/certs
+  jwks: ''
+
+  # -- OIDC client ID used for packages authenticated through authservice
+  client_id: ""
+
+  # -- OIDC client secret used for packages authenticated through authservice
+  client_secret: ""
+
+  # -- OIDC token URL template string (to be used as default)
+  token_url: "https://{{ .Values.sso.oidc.host }}/auth/realms/{{ .Values.sso.oidc.realm }}/protocol/openid-connect/token"
+
+  # -- OIDC auth URL template string (to be used as default)
+  auth_url: "https://{{ .Values.sso.oidc.host }}/auth/realms/{{ .Values.sso.oidc.realm }}/protocol/openid-connect/auth"
+
+  # -- Kubernetes Secret containing the sso.certificate_authority value for SSO enabled application namespaces
+  secretName: "tls-ca-sso"
+
 addons:
   keycloak:
     enabled: true
+    database:
+      host: keycloak-dev.c4ie4j7le0jh.us-east-1.rds.amazonaws.com
+      type: postgres
+      port: 5432
+      database: keycloak
+      username: postgres
+#     Additional keycloak config in secrets.enc.yaml
+#     password: password-data
     ingress:
       gateway: "passthrough"
 #     Additional keycloak config in secrets.enc.yaml
