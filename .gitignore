@@ -21,6 +21,15 @@ x.yaml
 refresh-istio.sh
 private-registry.sh
 istio-formatted.yaml
+variables.tf
+**auth**
+
+variables.conf
+
+.terraform.lock.hcl
+terraform.tfstate*
+.terraform
+
 bigvang.values
 00-variables.conf
 bigbang.values
