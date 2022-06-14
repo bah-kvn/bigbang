@@ -139,6 +139,7 @@ sso:
 
 addons:
   sonarqube:
+    enabled: true
     values:
       initSysctl:
         enabled: true
