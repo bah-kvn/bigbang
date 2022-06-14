@@ -138,6 +138,8 @@ sso:
   secretName: "tls-ca-sso"
 
 addons:
+  sonarqube:
+    enabled: true
   argocd:
     enabled: true
   keycloak:
