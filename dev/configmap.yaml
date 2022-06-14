@@ -161,10 +161,10 @@ addons:
 #     cert: cert-data 
 
   gitlabRunner:
-    enabled: true
+    enabled: false
 
   gitlab:
-    enabled: true
+    enabled: false
     flux:
       timeout: 45m
       upgrade:
