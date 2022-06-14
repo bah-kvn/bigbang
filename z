@@ -1,5 +1,0 @@
-
-export KUBE_TOKEN=$(kubectl exec --stdin=true --tty=true devwebapp -- cat /var/run/secrets/kubernetes.io/serviceaccount/token)
-echo $KUBE_TOKEN
-
-curl -k -vvvvv --request POST --data '{ "jwt": "'"$KUBE_TOKEN"'", "role": "example" }' https://vault.stg.bahsoftwarefactory.com/v1/auth/kubernetes/login
