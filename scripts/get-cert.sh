@@ -1,7 +1,8 @@
-
+mkdir -p /tmp/certbot
 #7296
  docker run -it --rm --name certbot \
       -v "/etc/letsencrypt:/etc/letsencrypt" \
+      -v "/tmp/certbot:/tmp/certbot" \
       -v "/var/lib/letsencrypt:/var/lib/letsencrypt" \
       -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
       -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
@@ -12,7 +13,7 @@
                             --non-interactive \
                             --agree-tos \
                             --email hansen_kevin@bah.com \
-                              -d "*.dev.bahsoftwarefactory.com" \
+                              -d "*.stg.bahsoftwarefactory.com" \
                               --work-dir /tmp/certbot \
                               --config-dir /tmp/certbot
 

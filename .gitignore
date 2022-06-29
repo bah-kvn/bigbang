@@ -1,4 +1,11 @@
-values.yaml
+init
+unseal.sh
+set_root_token.sh
+addons.yaml
+8-public-tls.yaml
+public-tls.yaml
+chart
+**values.yaml
 istio-values.yaml
 istio-cert.yaml
 *.pem
@@ -23,3 +30,6 @@ variables.conf
 terraform.tfstate*
 .terraform
 .terraform.tfstate.lock.info
+
+bigbang.values
+k8s-auth-example.sh
