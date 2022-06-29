@@ -11,7 +11,7 @@ apt-get update
 apt-get install -y curl grep gawk util-linux open-iscsi nfs-common
 
 ## Preparing the config file
-echo 'cloud-provider-name: aws' > /etc/rancher/rke2/config.yaml
+echo 'cloud-provider-name: "aws"' > /etc/rancher/rke2/config.yaml
 echo 'write-kubeconfig-mode: "0644"' >> /etc/rancher/rke2/config.yaml
 echo 'tls-san:' >> /etc/rancher/rke2/config.yaml
 echo '  - ${kube_url}' >> /etc/rancher/rke2/config.yaml
