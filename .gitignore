@@ -14,11 +14,12 @@ x.yaml
 refresh-istio.sh
 private-registry.sh
 istio-formatted.yaml
-variables.tf
 **auth**
 
+00-variables.conf
 variables.conf
 
 .terraform.lock.hcl
 terraform.tfstate*
 .terraform
+.terraform.tfstate.lock.info

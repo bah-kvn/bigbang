@@ -45,6 +45,7 @@ resource "aws_instance" "rke2_cluster" {
   instance_type               = var.aws_instance_type
   subnet_id                   = var.aws_subnet_id
   key_name                    = aws_key_pair.ec2_instance.key_name
+  iam_instance_profile        = var.aws_instance_profile
   security_groups             = [aws_security_group.devnodes_sg.id]
   user_data                   = data.template_file.master_node.rendered
   associate_public_ip_address = true
@@ -120,6 +121,7 @@ data "template_file" "extra_nodes" {
 resource "aws_instance" "rke2_cluster_node_b" {
   ami                         = var.aws_ami
   instance_type               = var.aws_instance_type
+  iam_instance_profile        = var.aws_instance_profile
   subnet_id                   = var.aws_subnet_id
   key_name                    = aws_key_pair.ec2_instance.key_name
   security_groups             = [aws_security_group.devnodes_sg.id]
@@ -155,6 +157,7 @@ resource "aws_instance" "rke2_cluster_node_b" {
 resource "aws_instance" "rke2_cluster_node_c" {
   ami                         = var.aws_ami
   instance_type               = var.aws_instance_type
+  iam_instance_profile        = var.aws_instance_profile
   subnet_id                   = var.aws_subnet_id
   key_name                    = aws_key_pair.ec2_instance.key_name
   security_groups             = [aws_security_group.devnodes_sg.id]
