@@ -135,6 +135,7 @@ addons:
       type: "s3"
       region: "us-east-1"
       bucketPrefix: "bsf-stg"
+      iamProfile: "BSF_RKE2_ControlPlane_Role"
     values:
       gitlab:
         webservice:
