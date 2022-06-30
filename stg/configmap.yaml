@@ -131,6 +131,9 @@ addons:
     hostnames:
       gitlab: gitlab
       registry: gitlab-registry
+    objectStorage:
+      type: "s3"
+      bucketPrefix: "bsf-stg"
     values:
       gitlab:
         webservice:
