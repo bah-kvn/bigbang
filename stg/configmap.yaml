@@ -181,9 +181,9 @@ addons:
         appConfig:
           object_store:
             enabled: true
-            storage_options:
-              server_side_encryption: aws:kms
-              server_side_encryption_kms_key_id: arn:aws:kms:us-east-1:729651203190:key/e099ae7e-6933-4c87-993d-6787bd672d0b
+            #storage_options:
+            #  server_side_encryption: aws:kms
+            #  server_side_encryption_kms_key_id: arn:aws:kms:us-east-1:729651203190:key/e099ae7e-6933-4c87-993d-6787bd672d0b
             connection: 
               secret: gitlab-rails-storage
               key: connection
