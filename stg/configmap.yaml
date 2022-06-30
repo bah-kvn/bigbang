@@ -133,6 +133,7 @@ addons:
       registry: gitlab-registry
     objectStorage:
       type: "s3"
+      region: "us-east-1"
       bucketPrefix: "bsf-stg"
     values:
       gitlab:
