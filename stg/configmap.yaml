@@ -159,6 +159,8 @@ addons:
         sidekiq:
           minReplicas: 1
           maxReplicas: 1
+      minio:
+        enabled: false
       registry:
         bucket: bsf-stg-gitlab-registry-storage
         hpa:
