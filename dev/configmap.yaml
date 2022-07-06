@@ -9,13 +9,13 @@ istio:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/c-m-n6rc24wl=owned,env=staging,ingress-type=public"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/c-m-8slnllj8=owned,env=development,ingress-type=public"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
     passthrough-ingressgateway:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/c-m-n6rc24wl=owned,env=staging,ingress-type=passthrough"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/c-m-8slnllj8=owned,env=development,ingress-type=passthrough"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
   gateways:
     passthrough:
