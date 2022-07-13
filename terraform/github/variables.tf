@@ -41,9 +41,27 @@ variable "repository_visibility" {
   description = "Visiblity, 'public', 'private', or 'internal'"
 }
 
-variable repository_delete_branch_on_merge {
+variable "repository_delete_branch_on_merge" {
   type        = bool
   default     = true
   description = "Deleate head branch on merge."
+}
+
+variable "readme_overview" {
+  type        = string
+  default     = "This is a repo for one of the BSF deployment steps.  This text should be overriden from terraform, or updated by the repo owner after it has been created."
+  description = "Override this value with your README.md overview statement."
+}
+
+variable "readme_inputs" {
+  type        = list(string)
+  default     = ["one", "two", "three"]
+  description = "Override this list with your repo's required inputs."
+}
+
+variable "readme_outputs" {
+  type        = list(string)
+  default     = ["one", "two", "three"]
+  description = "Override this list with your repo's outputs."
 }
 
