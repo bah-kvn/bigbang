@@ -3,7 +3,7 @@
 # Exit if any of the intermediate steps fail
 set -e -x
 
-PUBLIC_IP=$(curl ifconfig.me)
+PUBLIC_IP=$(curl checkip.amazonaws.com)
 
 # Safely produce a JSON object containing the result value.
 # jq will ensure that the value is properly quoted

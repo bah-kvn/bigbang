@@ -11,7 +11,7 @@ resource "local_sensitive_file" "ssh_private_key_pem" {
 resource "null_resource" "upload_ssh_private_key_pem" {
   depends_on = [local_sensitive_file.ssh_private_key_pem]
   provisioner "local-exec" {
-    command = "aws s3 cp auth/${var.terraform_project_name}/id_rsa s3://${var.terraform_remote_state_name}/${var.terraform_project_name}/auth/id_rsa"
+    command = "aws s3 cp auth/${var.terraform_project_name}/id_rsa s3://${var.terraform_remote_state_name}/${local.name_prefix}/auth/id_rsa"
   }
 }
 
@@ -24,7 +24,7 @@ resource "local_file" "ssh_public_key_openssh" {
 resource "null_resource" "upload_ssh_private_key_openssh" {
   depends_on = [local_file.ssh_public_key_openssh]
   provisioner "local-exec" {
-    command = "aws s3 cp auth/${var.terraform_project_name}/id_rsa.pub s3://${var.terraform_remote_state_name}/${var.terraform_project_name}/auth/id_rsa.pub"
+    command = "aws s3 cp auth/${var.terraform_project_name}/id_rsa.pub s3://${var.terraform_remote_state_name}/${local.name_prefix}/auth/id_rsa.pub"
   }
 }
 
@@ -38,6 +38,6 @@ resource "local_sensitive_file" "kube_config_server_yaml" {
 resource "null_resource" "upload_kube_config_server_yaml" {
   depends_on = [local_sensitive_file.kube_config_server_yaml]
   provisioner "local-exec" {
-    command = "aws s3 cp auth/${var.terraform_project_name}/kubeconfig.yaml s3://${var.terraform_remote_state_name}/${var.terraform_project_name}/auth/kubeconfig.yaml"
+    command = "aws s3 cp auth/${var.terraform_project_name}/kubeconfig.yaml s3://${var.terraform_remote_state_name}/${local.name_prefix}/auth/kubeconfig.yaml"
   }
 }

@@ -13,3 +13,8 @@ output "ssh_private_key_pem" {
   value       = tls_private_key.global_key.private_key_pem
   sensitive   = true
 }
+
+output "your_cluster_value" {
+  description = "cluster value"
+  value = local.name_prefix
+}
