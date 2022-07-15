@@ -12,6 +12,19 @@ tldr;
 export GITHUB_TOKEN=asdf
 ```
 
+## Requirements
+
+1. AWSAML - For remote state on S3
+2. GitHub PAT for Deployment
+    1. Repo Admin
+    2. admin:pre_receive_hook
+    3. [optional] delete_repo
+3. GitHub PAT for Actions
+    1. repo:status
+    2. read:org
+4. GitHub Repo template
+    1. template repo must have default branch 'main'
+
 ## Deployment
 
 IMPORTANT: Setup the remote state before running this module.
