@@ -152,52 +152,9 @@ addons:
       bucketPrefix: "bsf-stg"
       iamProfile: "BSF_RKE2_ControlPlane_Role"
     values:
-      gitlab:
-        webservice:
-          minReplicas: 1
-          maxReplicas: 1
-          helmTests:
-            enabled: false
-          resources:
-            limits:
-              cpu: 2
-              memory: 4G
-            requests:
-              cpu: 2
-              memory: 4G
-        gitaly:
-          resources:
-            limits:
-              cpu: 2
-              memory: 4G
-            requests:
-              cpu: 2
-              memory: 4G
-        gitlab-shell:
-          minReplicas: 1
-          maxReplicas: 1
-        sidekiq:
-          minReplicas: 1
-          maxReplicas: 1
       registry:
         bucket: bsf-stg-gitlab-registry-storage
-        hpa:
-          minReplicas: 1
-          maxReplicas: 1
       global:
-        extraEnvFrom:
-          OAUTH_GITHUB_API_KEY:
-            secretKeyRef:
-              name: github-oauth
-              key: key
-          OAUTH_GITHUB_APP_SECRET:
-            secretKeyRef:
-              name: github-oauth
-              key: secret
-          OAUTH_GITHUB_URL:
-            secretKeyRef:
-              name: github-oauth
-              key: url
         appConfig:
           object_store:
             enabled: true
