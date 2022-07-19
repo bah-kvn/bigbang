@@ -244,13 +244,13 @@ addons:
                     key: config 
           omniauth:
             enabled: true
-            allowSingleSignOn: ['github']
+            allowSingleSignOn: ['saml']
             autoLinkUser: true
-            syncProfileFromProvider: ['github']
-            syncProfileAttributes: ['name', 'email']
+            syncProfileFromProvider: ['saml']
+            # syncProfileAttributes: ['name', 'email']
             blockAutoCreatedUsers: false
             providers:
-              - secret: github
+              - secret: gitlab-keycloak
           registry: 
             enabled: true
             storage:

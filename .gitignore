@@ -33,3 +33,5 @@ terraform.tfstate*
 
 bigbang.values
 k8s-auth-example.sh
+
+keycloak-gitlab.yaml
