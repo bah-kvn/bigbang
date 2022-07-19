@@ -72,7 +72,7 @@ logging:
 monitoring:
   enabled: true
   sso:
-    enabled: false
+    enabled: true
     prometheus:
       client_id: "prometheus"
     alertmanager: 
