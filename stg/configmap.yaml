@@ -28,6 +28,11 @@ istio:
         mode: "PASSTHROUGH"
 istiooperator:
   enabled: true
+sso: 
+  oidc:
+    host: keycloak.stg.bahsoftwarefactory.com
+    realm: bsf
+  certificate_authority: ''
 kiali:
   enabled: true
 jaeger:
@@ -65,7 +70,17 @@ logging:
           cpu: 200m
           memory: 512Mi
 monitoring:
-  enabled: false
+  enabled: true
+  sso:
+    enabled: false
+    prometheus:
+      client_id: "prometheus"
+    alertmanager: 
+      client_id: "alertmanager"
+    grafana:  
+      client_id: "grafana"
+      tls_skip_verify_insecure: true
+      scopes: "Grafana"
   values:
     prometheus:
       prometheusSpec:
