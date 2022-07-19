@@ -138,11 +138,11 @@ addons:
 
   gitlab:
     enabled: true
-    flux:
-      timeout: 45m
-      upgrade:
-        remediation:
-          retries: 10
+    # flux:
+    #   timeout: 45m
+    #   upgrade:
+    #     remediation:
+    #       retries: 10
     hostnames:
       gitlab: gitlab
       registry: gitlab-registry
@@ -158,9 +158,6 @@ addons:
         appConfig:
           object_store:
             enabled: true
-            #storage_options:
-            #  server_side_encryption: aws:kms
-            #  server_side_encryption_kms_key_id: arn:aws:kms:us-east-1:729651203190:key/e099ae7e-6933-4c87-993d-6787bd672d0b
             connection: 
               secret: gitlab-rails-storage
               key: connection
