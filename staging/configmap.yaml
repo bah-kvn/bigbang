@@ -137,7 +137,7 @@ addons:
     enabled: false
 
   gitlab:
-    enabled: true
+    enabled: false
     # flux:
     #   timeout: 45m
     #   upgrade:
