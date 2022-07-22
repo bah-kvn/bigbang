@@ -137,7 +137,7 @@ addons:
     enabled: false
 
   gitlab:
-    enabled: true
+    enabled: false
     # flux:
     #   timeout: 45m
     #   upgrade:
@@ -212,7 +212,7 @@ addons:
               key: config
      
   vault:
-    enabled: true
+    enabled: false
 
     values:
       # disable autoInit. It should not be used for operations.
