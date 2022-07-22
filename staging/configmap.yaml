@@ -1,7 +1,7 @@
 
 domain: stg.bahsoftwarefactory.com
 istio:
-  enabled: true
+  enabled: false
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -27,7 +27,7 @@ istio:
       tls:
         mode: "PASSTHROUGH"
 istiooperator:
-  enabled: true
+  enabled: false
 sso: 
   oidc:
     host: keycloak.stg.bahsoftwarefactory.com
