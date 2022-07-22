@@ -70,7 +70,7 @@ logging:
           cpu: 200m
           memory: 512Mi
 monitoring:
-  enabled: false
+  enabled: true
   sso:
     enabled: true
     prometheus:
