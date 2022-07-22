@@ -13,6 +13,7 @@ istio-cert.yaml
 *.tgz
 *.log
 *.tar
+*-values.yaml
 x
 .prereqs
 push.sh
