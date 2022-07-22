@@ -7,7 +7,7 @@ kubectl create namespace bigbang
 kubectl create namespace flux-system
 
 #see notes/sops-kms.config
-gpg --export-secret-key --armor ${fp} | kubectl -n bigbang create secret generic sops-gpg --from-file=bigbangkey.asc=/dev/stdin
+#gpg --export-secret-key --armor ${fp} | kubectl -n bigbang create secret generic sops-gpg --from-file=bigbangkey.asc=/dev/stdin
 
 kubectl -n flux-system \
   create secret docker-registry private-registry \

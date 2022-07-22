@@ -1,7 +1,7 @@
 
 domain: stg.bahsoftwarefactory.com
 istio:
-  enabled: true
+  enabled: false
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -27,14 +27,14 @@ istio:
       tls:
         mode: "PASSTHROUGH"
 istiooperator:
-  enabled: true
+  enabled: false
 sso: 
   oidc:
     host: keycloak.stg.bahsoftwarefactory.com
     realm: bsf
   certificate_authority: ''
 kiali:
-  enabled: true
+  enabled: false
 jaeger:
   enabled: false
 eckoperator:
@@ -70,7 +70,7 @@ logging:
           cpu: 200m
           memory: 512Mi
 monitoring:
-  enabled: true
+  enabled: false
   sso:
     enabled: true
     prometheus:
@@ -129,7 +129,7 @@ twistlock:
 addons:
 
   keycloak:
-    enabled: true
+    enabled: false
     ingress:
       gateway: "passthrough"
 
@@ -212,7 +212,7 @@ addons:
               key: config
      
   vault:
-    enabled: true
+    enabled: false
 
     values:
       # disable autoInit. It should not be used for operations.
