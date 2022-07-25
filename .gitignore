@@ -36,4 +36,3 @@ bigbang.values
 k8s-auth-example.sh
 
 keycloak-gitlab.yaml
-gitlab-keycloak.yaml
