@@ -129,7 +129,7 @@ twistlock:
 addons:
 
   keycloak:
-    enabled: false
+    enabled: true
     ingress:
       gateway: "passthrough"
     istio:
