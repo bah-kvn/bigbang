@@ -129,17 +129,17 @@ twistlock:
 addons:
 
   keycloak:
-    enabled: false
+    enabled: true
     ingress:
       gateway: "passthrough"
     istio:
       injection: disabled
-#    database:
-#      host: keycloak-stg.c4ie4j7le0jh.us-east-1.rds.amazonaws.com
-#      type: postgres
-#      port: 5432
-#      database: keycloak
-#      username: postgres
+    database:
+      host: keycloak-stg.c4ie4j7le0jh.us-east-1.rds.amazonaws.com
+      type: postgres
+      port: 5432
+      database: keycloak
+      username: postgres
 # Additional keycloak config in secrets.enc.yaml
 #     password: password-data      
 
