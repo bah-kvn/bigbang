@@ -172,8 +172,11 @@ addons:
           object_store:
             enabled: true
             connection: 
-              secret: gitlab-rails-storage
-              key: connection
+              # secret: gitlab-rails-storage
+              # key: connection
+              provider: AWS
+              use_iam_profile: true
+              region: us-east-1
           artifacts: 
             bucket: bsf-stg-gitlab-artifacts-storage
           backups:
@@ -209,8 +212,14 @@ addons:
               - secret: gitlab-keycloak
           registry: 
             storage:
-              secret: gitlab-registry-storage
-              key: config
+              # secret: gitlab-registry-storage
+              # key: config
+              s3:
+                bucket: bsf-stg-gitlab-registry-storage
+                region: us-east-1
+                v4auth: true
+              annotations:
+                iam\.amazonaws\.com/role: BSF_RKE2_ControlPlane_Role
      
   vault:
     enabled: false
