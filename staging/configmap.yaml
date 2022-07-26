@@ -163,11 +163,11 @@ addons:
     #   bucketPrefix: "bsf-stg"
     #   iamProfile: "BSF_RKE2_ControlPlane_Role"
     values:
-      registry:
-        bucket: bsf-stg-gitlab-registry-storage
       global:
         minio:
           enabled: false
+        registry:
+          bucket: bsf-stg-gitlab-registry-storage
         appConfig:
           object_store:
             enabled: true
@@ -191,17 +191,6 @@ addons:
             bucket: bsf-stg-gitlab-terraformstate-storage
           uploads:
             bucket: bsf-stg-gitlab-uploads-storage
-          defaultCanCreateGroup: true
-          enableUsagePing: true
-          enableImpersonation: true
-          defaultTheme: 11
-          defaultProjectsFeatures:
-            issues: true
-            mergeRequests: true
-            wiki: true
-            snippets: true
-            builds: true
-            containerRegistry: true
           gitlab: 
             toolbox:
               backups:
@@ -219,7 +208,6 @@ addons:
             providers:
               - secret: gitlab-keycloak
           registry: 
-            enabled: true
             storage:
               secret: gitlab-registry-storage
               key: config
