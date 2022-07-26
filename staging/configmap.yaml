@@ -156,39 +156,39 @@ addons:
     hostnames:
       gitlab: gitlab
       registry: gitlab-registry
-    objectStorage:
-      type: "s3"
-      endpoint: "s3.us-east-1.amazonaws.com"
-      region: "us-east-1"
-      bucketPrefix: "bsf-stg"
-      iamProfile: "BSF_RKE2_ControlPlane_Role"
+    # objectStorage:
+    #   type: "s3"
+    #   endpoint: "s3.us-east-1.amazonaws.com"
+    #   region: "us-east-1"
+    #   bucketPrefix: "bsf-stg"
+    #   iamProfile: "BSF_RKE2_ControlPlane_Role"
     values:
       registry:
         bucket: bsf-stg-gitlab-registry-storage
       global:
         appConfig:
-          # object_store:
-          #   enabled: true
-          #   connection: 
-          #     secret: gitlab-rails-storage
-          #     key: connection
-          # artifacts: 
-          #   bucket: bsf-stg-gitlab-artifacts-storage
-          # backups:
-          #   bucket: bsf-stg-gitlab-backups-storage
-          #   tmpBucket: bsf-stg-gitlab-tmp-storage
-          # dependencyProxy:
-          #   bucket: bsf-stg-gitlab-dependencyproxy-storage
-          # externalDiffs:
-          #   bucket: bsf-stg-gitlab-externaldiffs-storage
-          # lfs:
-          #   bucket: bsf-stg-gitlab-lfs-storage
-          # packages:
-          #   bucket: bsf-stg-gitlab-packages-storage
-          # terraformState:
-          #   bucket: bsf-stg-gitlab-terraformstate-storage
-          # uploads:
-          #   bucket: bsf-stg-gitlab-uploads-storage
+          object_store:
+            enabled: true
+            connection: 
+              secret: gitlab-rails-storage
+              key: connection
+          artifacts: 
+            bucket: bsf-stg-gitlab-artifacts-storage
+          backups:
+            bucket: bsf-stg-gitlab-backups-storage
+            tmpBucket: bsf-stg-gitlab-tmp-storage
+          dependencyProxy:
+            bucket: bsf-stg-gitlab-dependencyproxy-storage
+          externalDiffs:
+            bucket: bsf-stg-gitlab-externaldiffs-storage
+          lfs:
+            bucket: bsf-stg-gitlab-lfs-storage
+          packages:
+            bucket: bsf-stg-gitlab-packages-storage
+          terraformState:
+            bucket: bsf-stg-gitlab-terraformstate-storage
+          uploads:
+            bucket: bsf-stg-gitlab-uploads-storage
           defaultCanCreateGroup: true
           enableUsagePing: true
           enableImpersonation: true
@@ -200,13 +200,13 @@ addons:
             snippets: true
             builds: true
             containerRegistry: true
-          # gitlab: 
-          #   toolbox:
-          #     backups:
-          #       objectStorage:
-          #         config: 
-          #           secret: gitlab-storage-config
-          #           key: config 
+          gitlab: 
+            toolbox:
+              backups:
+                objectStorage:
+                  config: 
+                    secret: gitlab-storage-config
+                    key: config 
           omniauth:
             enabled: true
             allowSingleSignOn: ['saml']
