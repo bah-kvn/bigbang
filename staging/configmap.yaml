@@ -166,6 +166,8 @@ addons:
       registry:
         bucket: bsf-stg-gitlab-registry-storage
       global:
+        minio:
+          enabled: false
         appConfig:
           object_store:
             enabled: true
@@ -216,11 +218,11 @@ addons:
             blockAutoCreatedUsers: false
             providers:
               - secret: gitlab-keycloak
-          # registry: 
-          #   enabled: true
-          #   storage:
-          #     secret: gitlab-registry-storage
-          #     key: config
+          registry: 
+            enabled: true
+            storage:
+              secret: gitlab-registry-storage
+              key: config
      
   vault:
     enabled: false
