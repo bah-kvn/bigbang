@@ -1,15 +1,16 @@
 resource "keycloak_openid_client" "alert_manager" {
   realm_id  = var.realm_id
-  client_id = "${var.env_prefix}-alert-manager"
+  client_id = "${var.env_prefix}-alertmanager"
 
   name    = "Alert Manager for ${var.env_prefix}"
   enabled = true
 
   access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
+  base_url = "https://alertmanager.${var.domain}"
 
   valid_redirect_uris = [
-    "http://alertmanager.${var.domain}/openid-callback"
+    "https://alertmanager.${var.domain}/login/generic_oauth"
   ]
 
   login_theme = "keycloak"
@@ -42,8 +43,10 @@ resource "keycloak_openid_client" "prometheus" {
   access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
 
+  base_url = "https://prometheus.${var.domain}"
+
   valid_redirect_uris = [
-    "http://prometheus.${var.domain}/openid-callback"
+    "https://prometheus.${var.domain}/login/generic_oauth"
   ]
 
   login_theme = "keycloak"
@@ -143,7 +146,7 @@ resource "keycloak_openid_user_property_protocol_mapper" "username" {
 resource "keycloak_openid_group_membership_protocol_mapper" "groups" {
   realm_id        = var.realm_id
   client_scope_id = keycloak_openid_client_scope.client_scope_grafana.id
-  name            = "group-membership-mapper"
+  name            = "groups"
 
   claim_name          = "groups"
   add_to_id_token     = true
@@ -161,9 +164,10 @@ resource "keycloak_openid_client" "grafana" {
   access_type                  = "CONFIDENTIAL"
   standard_flow_enabled        = true
   direct_access_grants_enabled = false
+  base_url = "https://grafana.${var.domain}"
 
   valid_redirect_uris = [
-    "http://grafana.${var.domain}/openid-callback"
+    "https://grafana.${var.domain}/login/generic_oauth"
   ]
 
   login_theme = "keycloak"
