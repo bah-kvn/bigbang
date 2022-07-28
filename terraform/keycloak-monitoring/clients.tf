@@ -7,6 +7,7 @@ resource "keycloak_openid_client" "alert_manager" {
 
   access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
+  direct_access_grants_enabled = false
   base_url = "https://alertmanager.${var.domain}"
 
   valid_redirect_uris = [
@@ -42,7 +43,7 @@ resource "keycloak_openid_client" "prometheus" {
 
   access_type           = "CONFIDENTIAL"
   standard_flow_enabled = true
-
+  direct_access_grants_enabled = false
   base_url = "https://prometheus.${var.domain}"
 
   valid_redirect_uris = [
