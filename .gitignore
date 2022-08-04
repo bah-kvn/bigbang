@@ -2,6 +2,10 @@
 .idea
 .vscode/
 
+# Mac things
+.DS_Store
+.private-*
+
 # VIM Swap
 [._]*.s[a-v][a-z]
 [._]*.sw[a-p]
@@ -17,23 +21,13 @@ Session.vim
 *.tfstate*
 .terraform.lock.hcl
 
-# Just in case
-admin.conf
-
-# Deploy stuff
-build_gitops
-
 # Cypress test stuffs
 node_modules
 *.mp4
 test/*.png
 
-# Mac things
-.DS_Store
-
-.private-*
-
 # directory level env variables
+.env
 .envrc
 
 # bootstrap scripts
