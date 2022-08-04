@@ -1,3 +1,45 @@
+# IDE
+.idea
+.vscode/
+
+# VIM Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# VIM Session
+Session.vim
+
+# Terraform stuff
+.terraform
+*.tfstate*
+.terraform.lock.hcl
+
+# Just in case
+admin.conf
+
+# Deploy stuff
+build_gitops
+
+# Cypress test stuffs
+node_modules
+*.mp4
+test/*.png
+
+# Mac things
+.DS_Store
+
+.private-*
+
+# directory level env variables
+.envrc
+
+# bootstrap scripts
+00-variables.conf
+variables.conf
+
 init
 unseal.sh
 set_root_token.sh
@@ -24,15 +66,9 @@ private-registry.sh
 istio-formatted.yaml
 **auth**
 
-00-variables.conf
-variables.conf
-
-.terraform.lock.hcl
-terraform.tfstate*
-.terraform
-.terraform.tfstate.lock.info
-
+# BigBang
 bigbang.values
 k8s-auth-example.sh
 scripts/gitlab-keycloak.yaml
 keycloak-gitlab.yaml
+tests/cypress/node_modules
