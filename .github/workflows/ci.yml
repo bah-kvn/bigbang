@@ -14,7 +14,4 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get install shellcheck
       - name: Run shell linting
-        run: |
-          for f in $(find "${{ github.workspace }}" -type f -name *.sh); do
-            shellcheck --format=gcc "$f"
-          done
+        run: shellcheck --format=gcc "$f" **/*.sh
