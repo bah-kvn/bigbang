@@ -1,28 +1,20 @@
 # yamllint disable rule:truthy
 ---
-name: Differential ShellCheck
+name: Lint
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
-
-permissions:
-  contents: read
-
 jobs:
-  test:
+  sca:
     runs-on: ubuntu-latest
-
-    permissions:
-      security-events: write
-      pull-requests: write
-
     steps:
-      - name: Repository checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Differential ShellCheck
-        uses: redhat-plumbers-in-action/differential-shellcheck@latest
-        with:
-          token: "${{ secrets.SHELLCHECK_TOKEN }}"
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: apt-get install shellcheck
+      - name: Run shell linting
+        run: |
+          for f in $(find "${{ github.workspace }}" -type f -name *.sh); do
+            shellcheck --format=gcc "$f"
+          done
