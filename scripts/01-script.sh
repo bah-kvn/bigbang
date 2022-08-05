@@ -16,8 +16,8 @@ SCRIPTS_DIR="$PROJECT_DIR/scripts"
 YOUR_IP=$(curl -s ifconfig.me)
 
 ## Loading creds
-export AWS_PROFILE=$AWSAML_PROFILE
-export AWS_DEFAULT_PROFILE=$AWSAML_PROFILE
+export AWS_PROFILE="$AWSAML_PROFILE"
+export AWS_DEFAULT_PROFILE="$AWSAML_PROFILE"
 
 ########################
 ## Generating PGP KEY ##
