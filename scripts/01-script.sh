@@ -167,7 +167,7 @@ aws ec2 authorize-security-group-ingress \
 ########################
 ## git add and commit ##
 ########################
-git checkout -b $YOUR_GIT_BRANCH
+git checkout -b "$YOUR_GIT_BRANCH"
 
 git add .sops.yaml
 git commit -m "chore: update default encryption key"
