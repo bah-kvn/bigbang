@@ -3,10 +3,13 @@
 ###############
 ## Variables ##
 ###############
-. variables.conf
+
+PROJECT_DIR=$(git rev-parse --show-toplevel)
+SCRIPTS_DIR="$PROJECT_DIR/scripts"
+. "$SCRIPTS_DIR/00-variables.conf"
 
 ##############
-## Pre reqs ##
+## Pre-reqs ##
 ##############
 
 # Getting your public ip
@@ -34,16 +37,22 @@ gpg --batch --full-generate-key --rfc4880 --digest-algo sha512 --cert-digest-alg
     Name-Comment: bigbang-dev-environment
 EOF
 
-FP=$(gpg --list-keys --fingerprint | grep "bigbang-dev-environment" -B 1 | grep -v "bigbang-dev-environment" | tr -d ' ' | tr -d 'Keyfingerprint=')
+FP=$(\
+  gpg --list-keys --fingerprint \
+  | grep "bigbang-dev-environment" -B 1 \
+  | grep -v "bigbang-dev-environment" \
+  | tr -d ' ' \
+  | sed -e 's/Keyfingerprint=//g'\
+)
 
 # Run the following to set the encryption key
 # sed: stream editor is like a cli version of find and replace
 # This ensures your secrets are only decryptable by your key
 
 ## On MacOS
-sed -i '' "s|pgp: FALSE_KEY_HERE|pgp: ""$FP""|g" .sops.yaml
-
-if [ $? -ne "0" ]; then
+if [ -f "$PROJECT_DIR/.sops.yaml" ]; then
+  sed -i '' 's|pgp: FALSE_KEY_HERE|pgp: '"$FP"'|g' "$PROJECT_DIR/.sops.yaml"
+else
   echo "No Sops yaml file, or wrong key (bad clean-up)"; exit 1
 fi
 
@@ -51,25 +60,31 @@ fi
 ## SSL cert generation ##
 #########################
 
-mkdir -p $HOME/letsencrypt
+mkdir -p "$HOME/letsencrypt"
 
 docker run -it --rm --name certbot \
-      -v "$HOME/letsencrypt:/tmp/letsencrypt" \
-      -v "${HOME}/.aws/credentials:/root/.aws/credentials" \
-      -e AWS_PROFILE=awsaml-729651203190-BAHSSO_Admin_Role \
-      -e AWS_DEFAULT_PROFILE=awsaml-729651203190-BAHSSO_Admin_Role \
-      certbot/dns-route53 certonly \
-        --dns-route53 \
-        --dns-route53-propagation-seconds 30 \
-        --non-interactive \
-        --agree-tos \
-        --email "$YOUR_EMAIL" \
-        -d "*.$YOUR_SUBDOMAIN.bahsoftwarefactory.com" \
-        --work-dir /tmp/letsencrypt \
-        --config-dir /tmp/letsencrypt
+  -v "$HOME/letsencrypt:/tmp/letsencrypt" \
+  -v "$HOME/.aws/credentials:/root/.aws/credentials" \
+  -e AWS_PROFILE=awsaml-729651203190-BAHSSO_Admin_Role \
+  -e AWS_DEFAULT_PROFILE=awsaml-729651203190-BAHSSO_Admin_Role \
+  certbot/dns-route53 certonly \
+    --dns-route53 \
+    --dns-route53-propagation-seconds 30 \
+    --non-interactive \
+    --agree-tos \
+    --email "$YOUR_EMAIL" \
+    -d "*.$YOUR_SUBDOMAIN.bahsoftwarefactory.com" \
+    --work-dir /tmp/letsencrypt \
+    --config-dir /tmp/letsencrypt
 
-KEY=$(cat $HOME/letsencrypt/live/$YOUR_SUBDOMAIN.bahsoftwarefactory.com/privkey.pem | sed -e 's/^/              /')
-CERT=$(cat $HOME/letsencrypt/live/$YOUR_SUBDOMAIN.bahsoftwarefactory.com/fullchain.pem | sed -e 's/^/              /')
+KEY=$(\
+  sed -e 's/^/              /' \
+  <"$HOME/letsencrypt/live/$YOUR_SUBDOMAIN.bahsoftwarefactory.com/privkey.pem" \
+)
+CERT=$(\
+  sed -e 's/^/              /'\
+  <"$HOME/letsencrypt/live/$YOUR_SUBDOMAIN.bahsoftwarefactory.com/fullchain.pem" \
+)
 
 cat > base/secrets.enc.yaml << EOF
 apiVersion: v1
@@ -80,7 +95,7 @@ stringData:
   values.yaml: |-
     registryCredentials:
     - registry: registry1.dso.mil
-      username: $IRONBANK_USER
+      username: $REGISTRY1_USERNAME
       password: $IRONBANK_PAT
     istio:
       gateways:
@@ -95,19 +110,18 @@ EOF
 # Encrypt the existing certificate and Ironbank creds
 sops -e -i base/secrets.enc.yaml
 
-grep "PRIVATE KEY" base/secrets.enc.yaml
-if [ $? -eq "0" ]; then
+if grep "PRIVATE KEY" "$PROJECT_DIR/base/secrets.enc.yaml"; then
   echo "Secrets not encrypted"; exit 1
 fi
 
 # Change Configmap
-sed -i '' 's|bigbang.dev|'$YOUR_SUBDOMAIN.bahsoftwarefactory.com'|g' dev/configmap.yaml
+sed -i '' 's|bigbang.dev|'"$YOUR_SUBDOMAIN.bahsoftwarefactory.com"'|g' "$PROJECT_DIR/dev/configmap.yaml"
 
 ###########################
 ## Git repository config ##
 ###########################
-sed -i '' 's|https://replace-with-your-git-repo.git|'$YOUR_GIT_REPOSITORY'|g' dev/bigbang.yaml 
-sed -i '' 's|replace-with-your-branch|'$YOUR_GIT_BRANCH'|g' dev/bigbang.yaml 
+sed -i '' 's|https://replace-with-your-git-repo.git|'"$YOUR_GIT_REPOSITORY"'|g' "$PROJECT_DIR/dev/bigbang.yaml"
+sed -i '' 's|replace-with-your-branch|'"$YOUR_GIT_BRANCH"'|g' "$PROJECT_DIR/dev/bigbang.yaml"
 
 ##############################
 ## Security groups creation ##
@@ -115,37 +129,40 @@ sed -i '' 's|replace-with-your-branch|'$YOUR_GIT_BRANCH'|g' dev/bigbang.yaml
 
 ## Adding IP to Rancher SG - ok
 aws ec2 authorize-security-group-ingress \
-    --group-id sg-0da90bd41542ff271 \
-    --ip-permissions IpProtocol=all,FromPort=-1,ToPort=-1,IpRanges='[{CidrIp='"$YOUR_IP"/32',Description='"$SG_DESCRIPTION"'}]' \
-    --region us-east-1 \
-    --no-cli-pager
+  --group-id sg-0da90bd41542ff271 \
+  --ip-permissions IpProtocol=all,FromPort=-1,ToPort=-1,IpRanges='[{CidrIp='"$YOUR_IP"/32',Description='"$SG_DESCRIPTION"'}]' \
+  --region us-east-1 \
+  --no-cli-pager
 
 ## Create your Security group
 aws ec2 create-security-group \
-    --group-name "$YOURNAME-rancher-nodes" \
-    --description "$YOURNAME-rancher-nodes" \
-    --vpc-id vpc-023a468241eea5b0b \
-    --region us-east-1 \
-    --no-cli-pager
+  --group-name "$YOUR_NAME-rancher-nodes" \
+  --description "$YOUR_NAME-rancher-nodes" \
+  --vpc-id vpc-023a468241eea5b0b \
+  --region us-east-1 \
+  --no-cli-pager
 
-SG_ID=$(aws ec2 describe-security-groups \
-    --filters Name=vpc-id,Values=vpc-023a468241eea5b0b \
-    Name=group-name,Values="$YOURNAME-rancher-nodes" \
-    --query 'SecurityGroups[*].[GroupId]' --output text)
+SG_ID=$(\
+  aws ec2 describe-security-groups \
+  --filters \
+    Name=vpc-id,Values=vpc-023a468241eea5b0b \
+    Name=group-name,Values="$YOUR_NAME-rancher-nodes" \
+  --query 'SecurityGroups[*].[GroupId]' --output text\
+)
 
 ## Adding IP to your cluster SG
 aws ec2 authorize-security-group-ingress \
-    --group-id "$SG_ID" \
-    --ip-permissions IpProtocol=all,FromPort=-1,ToPort=-1,IpRanges='[{CidrIp='"$YOUR_IP"/32',Description='"$SG_DESCRIPTION"'}]' \
-    --region us-east-1 \
-    --no-cli-pager
+  --group-id "$SG_ID" \
+  --ip-permissions IpProtocol=all,FromPort=-1,ToPort=-1,IpRanges='[{CidrIp='"$YOUR_IP"/32',Description='"$SG_DESCRIPTION"'}]' \
+  --region us-east-1 \
+  --no-cli-pager
 
 ## Adding rule to cluster communication
 aws ec2 authorize-security-group-ingress \
-    --group-id "$SG_ID" \
-    --ip-permissions IpProtocol=all,FromPort=-1,ToPort=-1,UserIdGroupPairs='[{GroupId='$SG_ID',Description="Allow Cluster Communication"}]' \
-    --region us-east-1 \
-    --no-cli-pager
+  --group-id "$SG_ID" \
+  --ip-permissions IpProtocol=all,FromPort=-1,ToPort=-1,UserIdGroupPairs='[{GroupId='"$SG_ID"',Description="Allow Cluster Communication"}]' \
+  --region us-east-1 \
+  --no-cli-pager
 
 ########################
 ## git add and commit ##
@@ -160,7 +177,7 @@ git add dev/bigbang.yaml
 git add dev/configmap.yaml
 git commit -m "chore: updated git repo"
 
-git push -u origin $YOUR_GIT_BRANCH
+git push -u origin "$YOUR_GIT_BRANCH"
 
 
 ############
@@ -172,7 +189,7 @@ Proceed to https://rancher.bahsoftwarefactory.com/dashboard/c/_/manager/provisio
 and use the following values to deploy your dev cluster:
 1 - Add a Cluster Name
 2 - Security group:
-  name: '$YOURNAME-rancher-nodes'
+  name: '$YOUR_NAME-rancher-nodes'
   id: '$SG_ID'
 3 - Use the following subnets:
   AZ A - subnet-08942469f925d9b66 (10.40.7.0/24)
@@ -184,7 +201,7 @@ and use the following values to deploy your dev cluster:
   ami-0017560e0ce9d6fbf
 6 - Select Cloud Provider - Amazon
 7 - Unselect NGINX Ingress
-8 - Update variables.conf 
+8 - Update variables.conf
   YOUR_SG_ID='$SG_ID'
   YOUR_CLUSTER_VALUE='< value from Mgmt Cluster in Related Resources tab of your new cluster >'
 "
