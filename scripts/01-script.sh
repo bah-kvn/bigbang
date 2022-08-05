@@ -95,7 +95,7 @@ stringData:
   values.yaml: |-
     registryCredentials:
     - registry: registry1.dso.mil
-      username: $REGISTRY1_USERNAME
+      username: $IRONBANK_USER
       password: $IRONBANK_PAT
     istio:
       gateways:
@@ -147,7 +147,8 @@ SG_ID=$(\
   --filters \
     Name=vpc-id,Values=vpc-023a468241eea5b0b \
     Name=group-name,Values="$YOUR_NAME-rancher-nodes" \
-  --query 'SecurityGroups[*].[GroupId]' --output text\
+  --query 'SecurityGroups[*].[GroupId]' \
+  --output text\
 )
 
 ## Adding IP to your cluster SG
