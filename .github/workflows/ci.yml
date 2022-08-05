@@ -1,0 +1,17 @@
+# yamllint disable rule:truthy
+---
+name: Lint
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  sca:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: sudo apt-get install shellcheck
+      - name: Run shell linting
+        run: shellcheck --format=gcc **/*.sh
