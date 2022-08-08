@@ -1,7 +1,8 @@
-
+#!/bin/sh
 
 kubectl delete secret -n gitlab gitlab-keycloak
-cat<<EOF > ./gitlab-keycloak.yaml
+
+cat <<EOF > ./gitlab-keycloak.yaml
 name: saml
 label: 'Keycloak'
 args:

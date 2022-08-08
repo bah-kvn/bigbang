@@ -14,4 +14,6 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get install shellcheck
       - name: Run shell linting
-        run: shellcheck --format=gcc **/*.sh
+        run: |
+          shellcheck --version
+          shellcheck --format=gcc **/*.sh

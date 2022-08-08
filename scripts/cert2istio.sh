@@ -1,10 +1,16 @@
+#!/bin/sh
 
+export CERTS="$HOME/certs/stg.bahsoftwarefactory.com"
 
-export CERTS="/Users/keithhansen/certs/stg.bahsoftwarefactory.com"
+ISTIO_KEY=$(sed "s/^/              /g" <"$CERTS/privkey.pem")
+export ISTIO_KEY
 
-export ISTIO_KEY=$(cat $CERTS/privkey.pem | sed "s/^/              /g")
-export ISTIO_CERT=$(cat $CERTS/cert.pem | sed "s/^/              /g")
-export ISTIO_CHAIN=$(cat $CERTS/fullchain.pem | sed "s/^/              /g")
+ISTIO_CERT=$(sed "s/^/              /g" <"$CERTS/cert.pem")
+export ISTIO_CERT
+
+ISTIO_CHAIN=$(sed "s/^/              /g" <"$CERTS/fullchain.pem")
+export ISTIO_CHAIN
+
 (
 echo """
 apiVersion: v1
@@ -22,5 +28,4 @@ ${ISTIO_KEY}
             cert: |-
 ${ISTIO_CERT}
 ${ISTIO_CHAIN}"""
-) | egrep -v "^  *subject=|^  *issuer=|^  *$" |   tee $CERTS/istio-$CLUSTER.yaml
-
+) | grep -E -v "^  *subject=|^  *issuer=|^  *$" | tee "$CERTS/istio-$CLUSTER.yaml"

@@ -1,4 +1,5 @@
-#https://krew.sigs.k8s.io/docs/user-guide/setup/install/
+#shellcheck disable=all
+# https://krew.sigs.k8s.io/docs/user-guide/setup/install/
 
 (
   set -x; cd "$(mktemp -d)" &&
@@ -14,4 +15,4 @@ echo 'add the following to your .bashrc or .zshrc in your $HOME'
 echo 'export PATH="${PATH}:${HOME}/.krew/bin"'
 
 kubectl krew install ctx
-kubectl krew list 
+kubectl krew list
