@@ -3,7 +3,7 @@
 ## Variables ##
 ###############
 
-#shellcheck disable=SC1091
+# shellcheck disable=SC1090
 PROJECT_DIR=$(git rev-parse --show-toplevel)
 SCRIPTS_DIR="$PROJECT_DIR/scripts"
 if [[ -e "$PROJECT_DIR/00-variables.conf" ]]; then
