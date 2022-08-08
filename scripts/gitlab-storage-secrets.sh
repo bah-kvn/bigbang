@@ -1,7 +1,6 @@
+#!/bin/sh
 
-
-
-#aws resourcegroupstaggingapi get-resources --tag-filters Key="kubernetes.io/cluster/c-m-n6rc24wl",Values="owned" 
+# aws resourcegroupstaggingapi get-resources --tag-filters Key="kubernetes.io/cluster/c-m-n6rc24wl",Values="owned"
 kubectl delete secret  -n gitlab gitlab-registry-storage
 kubectl delete secret  -n gitlab gitlab-rails-storage
 kubectl delete secret  -n gitlab gitlab-storage-config

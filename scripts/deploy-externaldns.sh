@@ -1,18 +1,26 @@
-# Instructions: Set the environment variables below - save, then run this script. 
-# Verify the Deployment is running 
+#!/bin/sh
+
+# Instructions: Set the environment variables below - save, then run this script.
+# Verify the Deployment is running
 #
 
 export CLUSTER="sls"
 export DOMAIN="bahsoftwarefactory.com"
-export ZONE=$( aws route53 list-hosted-zones-by-name --dns-name $CLUSTER.$DOMAIN | jq '.HostedZones[0].Id' | cut -d'/' -f3 )
+ZONE=$(\
+  aws route53 list-hosted-zones-by-name --dns-name "$CLUSTER.$DOMAIN" \
+  | jq '.HostedZones[0].Id' \
+  | cut -d'/' -f3\
+)
+export ZONE
 export DIR=/tmp
 export FILE=$DIR/external-dns.yaml
 export EXTERNALDNS_NS="kube-system"
+
 #
 # End of environment variables
 #
 
-tee $FILE <<EOF
+tee "$FILE" <<EOF
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -89,9 +97,6 @@ echo " Domain = $DOMAIN"
 echo "   Zone = $ZONE"
 echo
 
-envsubst < $FILE | kubectl create --namespace ${EXTERNALDNS_NS:-"default"} -f -
-
+envsubst < "$FILE" | kubectl create --namespace "${EXTERNALDNS_NS:-'default'}" -f -
 
 echo "May take up to 3 minutes for DNS to be propagated - can be verified via the console"
-
-

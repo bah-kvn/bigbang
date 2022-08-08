@@ -189,7 +189,6 @@ git commit -m "chore: updated git repo"
 
 git push -u origin "$YOUR_GIT_BRANCH"
 
-
 ############
 ## Output ##
 ############

@@ -1,12 +1,12 @@
+#!/bin/sh
 
-
-
-#gitlab-csn-secret.sh
+# gitlab-csn-secret.sh
 ./gitlab-public-secret.sh
 
 #gitlab-keycloak.sh
 kubectl delete secret -n gitlab gitlab-keycloak
-cat<<EOF > ./gitlab-keycloak.yaml
+
+cat <<EOF > ./gitlab-keycloak.yaml
 name: saml
 label: 'Keycloak'
 args:
