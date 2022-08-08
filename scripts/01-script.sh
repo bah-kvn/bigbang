@@ -29,7 +29,8 @@ export AWS_DEFAULT_PROFILE="$AWSAML_PROFILE"
 ########################
 
 #### Using this multiline command to generate the key makes it work in all cases.
-gpg --batch --full-generate-key --rfc4880 --digest-algo sha512 --cert-digest-algo sha512 <<EOF
+if ! gpg --list-keys --fingerprint | grep -q 'bigbang-dev-environment'; then
+  gpg --batch --full-generate-key --rfc4880 --digest-algo sha512 --cert-digest-algo sha512 <<EOF
     %no-protection
     # %no-protection: means the private key won't be password protected
     # (no password is a fluxcd requirement, it might also be true for argo & sops)
@@ -41,6 +42,7 @@ gpg --batch --full-generate-key --rfc4880 --digest-algo sha512 --cert-digest-alg
     Name-Real: bigbang-dev-environment
     Name-Comment: bigbang-dev-environment
 EOF
+fi
 
 FP=$(\
   gpg --list-keys --fingerprint \
@@ -115,7 +117,7 @@ EOF
 # Encrypt the existing certificate and Ironbank creds
 sops -e -i base/secrets.enc.yaml
 
-if grep -q "PRIVATE KEY" "$PROJECT_DIR/base/secrets.enc.yaml"; then
+if ! grep -q "PRIVATE KEY" "$PROJECT_DIR/base/secrets.enc.yaml"; then
   echo "Secrets not encrypted"; exit 1
 fi
 
