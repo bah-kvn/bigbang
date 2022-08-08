@@ -168,7 +168,7 @@ kubectl patch psp global-unrestricted-psp -p '{
     }
   }
 }'
-kubectl patch psp global-restricted-psp -p '{\
+kubectl patch psp global-restricted-psp -p '{
   "metadata": {
     "annotations": {
       "seccomp.security.alpha.kubernetes.io/allowedProfileNames": "*"
