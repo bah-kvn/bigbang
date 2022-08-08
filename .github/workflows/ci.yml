@@ -16,5 +16,6 @@ jobs:
       - run: |
           echo github.ref is: ${{ github.ref }}
           echo github.event_name is: ${{ github.event_name }}
+      - run: head -25 ./scripts/01-script.sh
       - name: Run shell linting
         run: shellcheck --format=gcc **/*.sh
