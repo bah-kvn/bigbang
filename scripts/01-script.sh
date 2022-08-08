@@ -4,13 +4,12 @@
 ## Variables ##
 ###############
 
+# shellcheck disable=SC1090
 PROJECT_DIR=$(git rev-parse --show-toplevel)
 SCRIPTS_DIR="$PROJECT_DIR/scripts"
 if [[ -e "$PROJECT_DIR/00-variables.conf" ]]; then
-  # shellcheck disable=SC1091
   source "$PROJECT_DIR/00-variables.conf"
 elif [[ -e "$SCRIPTS_DIR/00-variables.conf" ]]; then
-  # shellcheck disable=SC1091
   source "$SCRIPTS_DIR/00-variables.conf"
 fi
 
