@@ -4,6 +4,7 @@
 ## Variables ##
 ###############
 
+#shellcheck disable=SC1091
 PROJECT_DIR=$(git rev-parse --show-toplevel)
 SCRIPTS_DIR="$PROJECT_DIR/scripts"
 . "$SCRIPTS_DIR/00-variables.conf"
@@ -172,8 +173,10 @@ git checkout -b "$YOUR_GIT_BRANCH"
 
 git add .sops.yaml
 git commit -m "chore: update default encryption key"
+
 git add base/secrets.enc.yaml
 git commit -m "chore: add tls certificate and iron bank pull credentials"
+
 git add dev/bigbang.yaml
 git add dev/configmap.yaml
 git commit -m "chore: updated git repo"
