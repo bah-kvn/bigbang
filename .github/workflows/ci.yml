@@ -13,5 +13,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install dependencies
         run: sudo apt-get install shellcheck
+      - run: ls -al
       - name: Run shell linting
         run: shellcheck --format=gcc **/*.sh
