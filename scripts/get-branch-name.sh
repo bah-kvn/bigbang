@@ -1,2 +1,5 @@
-#shellcheck disable=all
-echo "branch = $(basename $(git symbolic-ref -q HEAD))"
+#!/bin/sh
+
+REF=$(git symbolic-ref -q HEAD)
+BRANCH=$(basename "$REF")
+echo "branch = $BRANCH"
