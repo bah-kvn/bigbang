@@ -7,7 +7,11 @@
 #shellcheck disable=SC1091
 PROJECT_DIR=$(git rev-parse --show-toplevel)
 SCRIPTS_DIR="$PROJECT_DIR/scripts"
-. "$SCRIPTS_DIR/00-variables.conf"
+if [[ -e "$PROJECT_DIR/00-variables.conf" ]]; then
+  source "$PROJECT_DIR/00-variables.conf"
+elif [[ -e "$SCRIPTS_DIR/00-variables.conf" ]]; then
+  source "$SCRIPTS_DIR/00-variables.conf"
+fi
 
 ##############
 ## Pre-reqs ##
@@ -111,7 +115,7 @@ EOF
 # Encrypt the existing certificate and Ironbank creds
 sops -e -i base/secrets.enc.yaml
 
-if grep "PRIVATE KEY" "$PROJECT_DIR/base/secrets.enc.yaml"; then
+if grep -q "PRIVATE KEY" "$PROJECT_DIR/base/secrets.enc.yaml"; then
   echo "Secrets not encrypted"; exit 1
 fi
 
