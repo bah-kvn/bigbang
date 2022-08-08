@@ -154,26 +154,26 @@ git push --mirror "https://$YOUR_GIT_PAT@$GIT_REPO"
 ## PSP settings ##
 ##################
 
-kubectl patch psp system-unrestricted-psp -p '{\
-  "metadata": {\
-    "annotations": {\
-      "seccomp.security.alpha.kubernetes.io/allowedProfileNames": "*"\
-    }\
-  }\
+kubectl patch psp system-unrestricted-psp -p '{
+  "metadata": {
+    "annotations": {
+      "seccomp.security.alpha.kubernetes.io/allowedProfileNames": "*"
+    }
+  }
 }'
-kubectl patch psp global-unrestricted-psp -p '{\
-  "metadata": {\
-    "annotations": {\
-      "seccomp.security.alpha.kubernetes.io/allowedProfileNames": "*"\
-    }\
-  }\
+kubectl patch psp global-unrestricted-psp -p '{
+  "metadata": {
+    "annotations": {
+      "seccomp.security.alpha.kubernetes.io/allowedProfileNames": "*"
+    }
+  }
 }'
 kubectl patch psp global-restricted-psp -p '{\
-  "metadata": {\
-    "annotations": {\
-      "seccomp.security.alpha.kubernetes.io/allowedProfileNames": "*"\
-    }\
-  }\
+  "metadata": {
+    "annotations": {
+      "seccomp.security.alpha.kubernetes.io/allowedProfileNames": "*"
+    }
+  }
 }'
 
 ######################
