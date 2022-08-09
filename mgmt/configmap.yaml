@@ -1,0 +1,82 @@
+
+domain: mgmt.bahsoftwarefactory.com
+istio:
+  enabled: true
+  ingressGateways:
+    public-ingressgateway:
+      type: "LoadBalancer"
+      kubernetesResourceSpec:
+        serviceAnnotations:
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,env=staging,ingress-type=public"
+          service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    passthrough-ingressgateway:
+      type: "LoadBalancer"
+      kubernetesResourceSpec:
+        serviceAnnotations:
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,env=staging,ingress-type=passthrough"
+          service.beta.kubernetes.io/aws-load-balancer-type: nlb
+          service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "ssl"
+  gateways:
+    passthrough:
+      ingressGateway: "passthrough-ingressgateway"
+      hosts:
+        - "*.{{ .Values.domain }}"
+      tls:
+        mode: "PASSTHROUGH"
+istiooperator:
+  enabled: true
+sso: 
+  oidc:
+    host: keycloak.stg.bahsoftwarefactory.com
+    realm: bsf
+  certificate_authority: ''
+kiali:
+  enabled: true
+jaeger:
+  enabled: false
+eckoperator:
+  enabled: false
+flux:
+  interval: 1m
+  rollback:
+    cleanupOnFail: false
+logging:
+  enabled: false
+monitoring:
+  enabled: true
+  sso:
+    enabled: true
+    prometheus:
+      client_id: "prometheus"
+    alertmanager: 
+      client_id: "alertmanager"
+    grafana:  
+      client_id: "grafana"
+      tls_skip_verify_insecure: true
+      scopes: "Grafana"
+  values:
+    prometheus:
+      prometheusSpec:
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1Gi
+fluentbit:
+  enabled: false
+clusterAuditor:
+  enabled: false
+gatekeeper:
+  enabled: false
+kyverno:
+  enabled: false
+twistlock:
+  enabled: false
+addons:
+  keycloak:
+    enabled: false
+  gitlabRunner:
+    enabled: false
+  gitlab:
+    enabled: false
+  vault:
+    enabled: false
