@@ -1,7 +1,7 @@
 
 domain: mgmt.bahsoftwarefactory.com
 istio:
-  enabled: true
+  enabled: false
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -11,27 +11,8 @@ istio:
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
           external-dns.alpha.kubernetes.io/hostname: "*.mgmt.bahsoftwarefactory.com"
           service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "false"
-#    passthrough-ingressgateway:
-#      type: "LoadBalancer"
-#      kubernetesResourceSpec:
-#        serviceAnnotations:
-#          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,env=management,ingress-type=passthrough"
-#          service.beta.kubernetes.io/aws-load-balancer-type: nlb
-#          service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "ssl"
-  gateways:
-    passthrough:
-      ingressGateway: "passthrough-ingressgateway"
-      hosts:
-        - "*.{{ .Values.domain }}"
-      tls:
-        mode: "PASSTHROUGH"
 istiooperator:
-  enabled: true
-sso: 
-  oidc:
-    host: keycloak.stg.bahsoftwarefactory.com
-    realm: bsf
-  certificate_authority: ''
+  enabled: false
 kiali:
   enabled: false
 jaeger:
