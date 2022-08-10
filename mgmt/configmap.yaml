@@ -7,15 +7,17 @@ istio:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,env=staging,ingress-type=public"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,env=managment,ingress-type=public"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
-    passthrough-ingressgateway:
-      type: "LoadBalancer"
-      kubernetesResourceSpec:
-        serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,env=staging,ingress-type=passthrough"
-          service.beta.kubernetes.io/aws-load-balancer-type: nlb
-          service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "ssl"
+          external-dns.alpha.kubernetes.io/hostname: "*.mgmt.bahsoftwarefactory.com"
+          service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "false"
+#    passthrough-ingressgateway:
+#      type: "LoadBalancer"
+#      kubernetesResourceSpec:
+#        serviceAnnotations:
+#          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,env=management,ingress-type=passthrough"
+#          service.beta.kubernetes.io/aws-load-balancer-type: nlb
+#          service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "ssl"
   gateways:
     passthrough:
       ingressGateway: "passthrough-ingressgateway"
@@ -31,7 +33,7 @@ sso:
     realm: bsf
   certificate_authority: ''
 kiali:
-  enabled: true
+  enabled: false
 jaeger:
   enabled: false
 eckoperator:
