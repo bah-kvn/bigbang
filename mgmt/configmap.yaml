@@ -1,7 +1,7 @@
 
 domain: mgmt.bahsoftwarefactory.com
 istio:
-  enabled: true
+  enabled: false
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -12,7 +12,7 @@ istio:
           external-dns.alpha.kubernetes.io/hostname: "*.mgmt.bahsoftwarefactory.com"
           service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "false"
 istiooperator:
-  enabled: true
+  enabled: false
 kiali:
   enabled: false
 jaeger:
