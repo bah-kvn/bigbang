@@ -1,7 +1,7 @@
 
 domain: mgmt.bahsoftwarefactory.com
 istio:
-  enabled: true
+  enabled: false
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -9,10 +9,12 @@ istio:
         serviceAnnotations:
           service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,env=managment,ingress-type=public"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/common-name: "*.mgmt.bahsoftwarefactory.com"
           external-dns.alpha.kubernetes.io/hostname: "*.mgmt.bahsoftwarefactory.com"
           service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "false"
 istiooperator:
-  enabled: true
+  enabled: false
 kiali:
   enabled: false
 jaeger:
