@@ -13,6 +13,13 @@ istio:
           cert-manager.io/common-name: "*.mgmt.bahsoftwarefactory.com"
           external-dns.alpha.kubernetes.io/hostname: "*.mgmt.bahsoftwarefactory.com"
           service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "false"
+  gateways:
+    public:
+      hosts:
+        - "*.{{ .Values.domain }}"
+      tls:
+        credentialName: wildcard-mgmt.bahsoftwarefactory.com
+
 istiooperator:
   enabled: true
 kiali:
