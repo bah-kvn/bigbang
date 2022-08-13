@@ -23,7 +23,7 @@ istio:
 istiooperator:
   enabled: true
 kiali:
-  enabled: false
+  enabled: true
 jaeger:
   enabled: false
 eckoperator:
@@ -35,7 +35,7 @@ flux:
 logging:
   enabled: false
 monitoring:
-  enabled: false
+  enabled: true
   sso:
     enabled: true
     prometheus:
