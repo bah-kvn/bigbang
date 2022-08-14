@@ -12,7 +12,7 @@ spec:
   interval: 1m
   url: https://github.boozallencsn.com/Solutions-Center/bigbang.git
   ref:
-    branch: mgmt
+    branch: rke2
   secretRef:
     name: private-git
 ---
@@ -26,7 +26,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: environment-repo
-  path: ./mgmt
+  path: ./rke2
   prune: true
   decryption:
     provider: sops
