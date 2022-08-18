@@ -35,7 +35,7 @@ flux:
 logging:
   enabled: false
 monitoring:
-  enabled: true
+  enabled: false
   sso:
     enabled: true
     prometheus:
