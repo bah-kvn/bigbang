@@ -1,5 +1,5 @@
 
-domain: base3.bahsoftwarefactory.com
+domain: base.bahsoftwarefactory.com
 istio:
   enabled: true
   ingressGateways:
@@ -7,11 +7,11 @@ istio:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/base3=owned,env=managment,ingress-type=public"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/base=owned,env=managment,ingress-type=public"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
           kubernetes.io/tls-acme: "true"
-          cert-manager.io/common-name: "*.base3.bahsoftwarefactory.com"
-          external-dns.alpha.kubernetes.io/hostname: "*.base3.bahsoftwarefactory.com"
+          cert-manager.io/common-name: "*.base.bahsoftwarefactory.com"
+          external-dns.alpha.kubernetes.io/hostname: "*.base.bahsoftwarefactory.com"
           service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "false"
   gateways:
     public:
