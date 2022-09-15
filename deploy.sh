@@ -23,8 +23,7 @@ kubectl create secret generic private-git \
   --from-literal="username='$GHCSN_USERNAME'" \
   --from-literal="password='$GHCSN_PASSWORD'"
 
-kustomize build "https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/flux?ref=1.38.0" \
-  | kubectl apply -f -
+kustomize build "https://repo1.dso.mil/platform-one/big-bang/bigbang.git//base/flux?ref=1.42.0" | kubectl apply -f -
 
 kubectl get deploy -o name -n flux-system | xargs -n1 -t kubectl rollout status -n flux-system
 
