@@ -1,5 +1,5 @@
 
-domain: rke2.bahsoftwarefactory.com
+domain: "rke2.bahsoftwarefactory.com"
 istio:
   enabled: true
   ingressGateways:
@@ -7,8 +7,8 @@ istio:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,env=managment,ingress-type=public"
-          service.beta.kubernetes.io/aws-load-balancer-type: nlb
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,ingress-type=public"
+          service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
           kubernetes.io/tls-acme: "true"
           cert-manager.io/common-name: "*.rke2.bahsoftwarefactory.com"
           external-dns.alpha.kubernetes.io/hostname: "*.rke2.bahsoftwarefactory.com"
@@ -18,7 +18,7 @@ istio:
       hosts:
         - "*.{{ .Values.domain }}"
       tls:
-        credentialName: public-cert
+        credentialName: "public-cert"
 
 istiooperator:
   enabled: true
