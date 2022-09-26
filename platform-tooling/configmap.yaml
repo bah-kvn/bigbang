@@ -1,0 +1,74 @@
+
+domain: "rke2.bahsoftwarefactory.com"
+istio:
+  enabled: true
+  ingressGateways:
+    public-ingressgateway:
+      type: "LoadBalancer"
+      kubernetesResourceSpec:
+        serviceAnnotations:
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/bsfpt=owned,ingress-type=public"
+          service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+          kubernetes.io/tls-acme: "true"
+          cert-manager.io/common-name: "*.bsfpt.bahsoftwarefactory.com"
+          external-dns.alpha.kubernetes.io/hostname: "*.bsfpt.bahsoftwarefactory.com"
+          service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "false"
+  gateways:
+    public:
+      hosts:
+        - "*.{{ .Values.domain }}"
+      tls:
+        credentialName: "public-cert"
+
+istiooperator:
+  enabled: true
+kiali:
+  enabled: true
+jaeger:
+  enabled: false
+eckoperator:
+  enabled: false
+flux:
+  interval: 1m
+  rollback:
+    cleanupOnFail: false
+logging:
+  enabled: false
+monitoring:
+  enabled: true
+  sso:
+    enabled: true
+    prometheus:
+      client_id: "prometheus"
+    alertmanager: 
+      client_id: "alertmanager"
+    grafana:  
+      client_id: "grafana"
+      tls_skip_verify_insecure: true
+      scopes: "Grafana"
+  values:
+    prometheus:
+      prometheusSpec:
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1Gi
+fluentbit:
+  enabled: false
+clusterAuditor:
+  enabled: false
+gatekeeper:
+  enabled: false
+kyverno:
+  enabled: false
+twistlock:
+  enabled: false
+addons:
+  keycloak:
+    enabled: false
+  gitlabRunner:
+    enabled: false
+  gitlab:
+    enabled: false
+  vault:
+    enabled: false
