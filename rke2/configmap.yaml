@@ -9,6 +9,7 @@ istio:
         serviceAnnotations:
           service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rke2=owned,ingress-type=public"
           service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+          service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-04987f9522e27a836, subnet-069fd7685cca4018a, subnet-08942469f925d9b66"
           kubernetes.io/tls-acme: "true"
           cert-manager.io/common-name: "*.rke2.bahsoftwarefactory.com"
           external-dns.alpha.kubernetes.io/hostname: "*.rke2.bahsoftwarefactory.com"
