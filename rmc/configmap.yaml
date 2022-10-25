@@ -1,5 +1,5 @@
 
-domain: "demo.bahsoftwarefactory.com"
+domain: "rmc.bahsoftwarefactory.com"
 istio:
   enabled: true
   ingressGateways:
@@ -7,12 +7,12 @@ istio:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/demo=owned,ingress-type=public"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rmc=owned,ingress-type=public"
           service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
           service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-04987f9522e27a836, subnet-069fd7685cca4018a, subnet-08942469f925d9b66"
           kubernetes.io/tls-acme: "true"
-          cert-manager.io/common-name: "*.demo.bahsoftwarefactory.com"
-          external-dns.alpha.kubernetes.io/hostname: "*.demo.bahsoftwarefactory.com"
+          cert-manager.io/common-name: "*.rmc.bahsoftwarefactory.com"
+          external-dns.alpha.kubernetes.io/hostname: "*.rmc.bahsoftwarefactory.com"
           service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "false"
   gateways:
     public:

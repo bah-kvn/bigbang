@@ -1,0 +1,188 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+AddCancelDrag and drop files, paste screenshots, or
+browseNo file chosen
+Activity
+Your request status changed to Waiting for Support.
+30/Sep/2022 1:38 PMLATEST
+Your request status changed to Pending Verification.
+17/Jul/2022 10:00 PM
+Cloud Services API User
+Cloud Services API User17/Jul/2022 10:00 PM
+Hello Hansen, Kevin [USA],
+
+We've identified your IAM user as being inactive for 45 days or more. Please select one of the self-service verification statuses.
+IAM Account: arn:aws:iam::729651203190:user/rancher-mgmt
+
+Account no longer required
+Account still required
+Please ensure that the IAM user and/or its keys are used at least once every 45 days to avoid future communications. If you need assistance, please comment on this ticket with the details.
+
+Thank You,
+
+Cloud Services Team
+
+Your request status changed to Resolved with resolution Done.
+29/Apr/2022 8:26 AM
+Barnhart, Joshua [USA]
+Barnhart, Joshua [USA]29/Apr/2022 8:26 AM
+Hello Hansen, Kevin [USA],
+
+The roles have been created as you requested. The trust for both is currently set for EC2. If this needs to be adjusted please let me know.
+
+I have also sent you an encrypted email with the IAM user (service account) that was requested. The permissions associated with that user are the worker and control plane policies as well.
+
+If you need any adjustments please let us know.
+
+Thanks,
+
+Josh Barnhart
+
+Your request status changed to Waiting for Support.
+28/Apr/2022 12:02 PM
+Hansen, Kevin [USA]
+Hansen, Kevin [USA]28/Apr/2022 12:02 PM
+AWS account 729651203190
+
+Your request status changed to Waiting for Customer.
+28/Apr/2022 11:58 AM
+Gonzalez Sanchez, Lizel [USA]
+Gonzalez Sanchez, Lizel [USA]28/Apr/2022 11:58 AM
+Kevin,
+
+What is the AWS account number you're requesting this for?
+
+Details28/Apr/2022 11:56 AM
+Sector/Account
+Strategic Innovation Group (SIG) - Digital FSO
+Application/Services
+Cloud Services - AWS
+Priority
+Lowest
+Account Action
+Service Account
+AWS / Azure Account ID
+729651203190
+Description
+To support deploying RKE2 on AWS 2 roles are required.
+
+Role #1:
+
+Name: control-plane
+
+Policy:
+
+{
+"Version": "2012-10-17",
+"Statement": [
+  {
+    "Effect": "Allow",
+    "Action": [
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeLaunchConfigurations",
+      "autoscaling:DescribeTags",
+      "ec2:DescribeInstances",
+      "ec2:DescribeRegions",
+      "ec2:DescribeRouteTables",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeVolumes",
+      "ec2:CreateSecurityGroup",
+      "ec2:CreateTags",
+      "ec2:CreateVolume",
+      "ec2:ModifyInstanceAttribute",
+      "ec2:ModifyVolume",
+      "ec2:AttachVolume",
+      "ec2:AuthorizeSecurityGroupIngress",
+      "ec2:CreateRoute",
+      "ec2:DeleteRoute",
+      "ec2:DeleteSecurityGroup",
+      "ec2:DeleteVolume",
+      "ec2:DetachVolume",
+      "ec2:RevokeSecurityGroupIngress",
+      "ec2:DescribeVpcs",
+      "elasticloadbalancing:AddTags",
+      "elasticloadbalancing:AttachLoadBalancerToSubnets",
+      "elasticloadbalancing:ApplySecurityGroupsToLoadBalancer",
+      "elasticloadbalancing:CreateLoadBalancer",
+      "elasticloadbalancing:CreateLoadBalancerPolicy",
+      "elasticloadbalancing:CreateLoadBalancerListeners",
+      "elasticloadbalancing:ConfigureHealthCheck",
+      "elasticloadbalancing:DeleteLoadBalancer",
+      "elasticloadbalancing:DeleteLoadBalancerListeners",
+      "elasticloadbalancing:DescribeLoadBalancers",
+      "elasticloadbalancing:DescribeLoadBalancerAttributes",
+      "elasticloadbalancing:DetachLoadBalancerFromSubnets",
+      "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
+      "elasticloadbalancing:ModifyLoadBalancerAttributes",
+      "elasticloadbalancing:RegisterInstancesWithLoadBalancer",
+      "elasticloadbalancing:SetLoadBalancerPoliciesForBackendServer",
+      "elasticloadbalancing:AddTags",
+      "elasticloadbalancing:CreateListener",
+      "elasticloadbalancing:CreateTargetGroup",
+      "elasticloadbalancing:DeleteListener",
+      "elasticloadbalancing:DeleteTargetGroup",
+      "elasticloadbalancing:DescribeListeners",
+      "elasticloadbalancing:DescribeLoadBalancerPolicies",
+      "elasticloadbalancing:DescribeTargetGroups",
+      "elasticloadbalancing:DescribeTargetHealth",
+      "elasticloadbalancing:ModifyListener",
+      "elasticloadbalancing:ModifyTargetGroup",
+      "elasticloadbalancing:RegisterTargets",
+      "elasticloadbalancing:SetLoadBalancerPoliciesOfListener",
+      "iam:CreateServiceLinkedRole",
+      "kms:DescribeKey"
+    ],
+    "Resource": [
+      "*"
+    ]
+  }
+]
+}
+Role #2:
+
+Name: worker
+
+Policy:
+
+{
+"Version": "2012-10-17",
+"Statement": [
+    {
+        "Effect": "Allow",
+        "Action": [
+            "ec2:DescribeInstances",
+            "ec2:DescribeRegions",
+            "ecr:GetAuthorizationToken",
+            "ecr:BatchCheckLayerAvailability",
+            "ecr:GetDownloadUrlForLayer",
+            "ecr:GetRepositoryPolicy",
+            "ecr:DescribeRepositories",
+            "ecr:ListImages",
+            "ecr:BatchGetImage"
+        ],
+        "Resource": "*"
+    }
+]
+}
+In addition to the roles a service account will be needed. The roles, and account will be used inside the rancher management cluster to allow access to aws resources for use by rancher. The rancher management creates secrets to store the credentials it uses to create aws resources. The current strategy of credential management requires the use of a session token to generate temporary credentials. There is no way to include a session token when configuring the cloud credentials as the credentials are intended to be “long lived” .
+
+Doc:
+
+https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/cloud-providers/amazon/
+
+https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/rke-clusters/node-pools/#cloud-credentials
+
+Account Information
+arn:aws:iam::729651203190:user/rancher-mgmt
