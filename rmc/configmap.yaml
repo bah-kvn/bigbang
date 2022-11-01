@@ -1,4 +1,4 @@
-
+#https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.4/guide/service/annotations/#access-control
 domain: "rmc.bahsoftwarefactory.com"
 istio:
   enabled: true
@@ -14,6 +14,8 @@ istio:
           cert-manager.io/common-name: "*.rmc.bahsoftwarefactory.com"
           external-dns.alpha.kubernetes.io/hostname: "*.rmc.bahsoftwarefactory.com"
           service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "false"
+          service.beta.kubernetes.io/load-balancer-source-ranges: "156.80.4.2/32 10.40.7.0/24 10.40.8.0/24 10.40.9.0/24"
+
   gateways:
     public:
       hosts:
