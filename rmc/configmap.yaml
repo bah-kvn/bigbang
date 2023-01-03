@@ -1,5 +1,6 @@
-#https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.4/guide/service/annotations/#access-control
+
 domain: "rmc.bahsoftwarefactory.com"
+
 istio:
   enabled: true
   ingressGateways:
@@ -8,14 +9,10 @@ istio:
       kubernetesResourceSpec:
         serviceAnnotations:
           service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rmc=owned,ingress-type=public"
-          service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
-          service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-04987f9522e27a836, subnet-069fd7685cca4018a, subnet-08942469f925d9b66"
-          kubernetes.io/tls-acme: true
-          cert-manager.io/common-name: "*.rmc.bahsoftwarefactory.com"
+          service.beta.kubernetes.io/aws-load-balancer-type: nlb
           external-dns.alpha.kubernetes.io/hostname: "*.rmc.bahsoftwarefactory.com"
-          service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: false
           service.beta.kubernetes.io/load-balancer-source-ranges: "156.80.4.2/32, 10.40.7.0/24, 10.40.8.0/24, 10.40.9.0/24"
-
+          service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-04987f9522e27a836, subnet-069fd7685cca4018a, subnet-08942469f925d9b66"
   gateways:
     public:
       hosts:
@@ -25,6 +22,7 @@ istio:
 
 istiooperator:
   enabled: true
+
 kiali:
   enabled: false
 jaeger:
