@@ -10,9 +10,9 @@ metadata:
   namespace: bigbang
 spec:
   interval: 1m
-  url: https://github.boozallencsn.com/Solutions-Center/bigbang.git
+  url: https://github.com/bah-kvn/bigbang.git
   ref:
-    branch: rmc
+    branch: main
   secretRef:
     name: private-git
 ---
@@ -26,7 +26,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: environment-repo
-  path: ./rmc
+  path: ./wl0
   prune: true
   decryption:
     provider: sops
