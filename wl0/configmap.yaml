@@ -24,7 +24,7 @@ istiooperator:
   enabled: true
 
 kiali:
-  enabled: false
+  enabled: true
 jaeger:
   enabled: false
 eckoperator:
