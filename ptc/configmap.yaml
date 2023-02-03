@@ -1,7 +1,6 @@
-
 domain: "ptc.bahsoftwarefactory.com"
+
 istio:
-  enabled: true
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -35,20 +34,7 @@ istio:
       tls:
         mode: "PASSTHROUGH"
         credentialName: "passthrough-cert"
-istiooperator:
-  enabled: true
-kiali:
-  enabled: true
-jaeger:
-  enabled: false
-eckoperator:
-  enabled: false
-flux:
-  interval: 1m
-  rollback:
-    cleanupOnFail: false
-logging:
-  enabled: false
+
 monitoring:
   enabled: true
   sso:
@@ -68,8 +54,10 @@ monitoring:
           requests:
             cpu: 200m
             memory: 1Gi
+
 loki:
   enabled: true
+
 promtail:
   enabled: true
   values:
@@ -123,24 +111,8 @@ promtail:
         readOnly: true
     extraArgs:
       - '-config.expand-env'
-fluentbit:
-  enabled: false
-clusterAuditor:
-  enabled: false
-gatekeeper:
-  enabled: false
-kyverno:
-  enabled: false
-twistlock:
-  enabled: false
-addons:
-  keycloak:
-    enabled: false
-  gitlabRunner:
-    enabled: false
-  gitlab:
-    enabled: false
 
+addons:
   vault:
     enabled: false
     ingress:
@@ -156,7 +128,7 @@ addons:
         extraEnvironmentVars:
           AGENT_INJECT_VAULT_ADDR: "https://vault.ptc.bahsoftwarefactory.com"
       server:
-        # The BigBang helm chart has configuration that can create the vault-tls secret and volumemont for you
+        # The BigBang helm chart has configuration that can create the vault-tls secret and volume mount for you
         # Volume mount the secret so that Vault can support Istio ingress passthrough
         volumes:
           - name: tls
@@ -243,4 +215,3 @@ addons:
               }
 
               service_registration "kubernetes" {}
-

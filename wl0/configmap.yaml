@@ -1,8 +1,6 @@
-
 domain: "wl0.bahsoftwarefactory.com"
 
 istio:
-  enabled: true
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
@@ -20,30 +18,15 @@ istio:
       tls:
         credentialName: "public-cert"
 
-istiooperator:
-  enabled: true
-
-kiali:
-  enabled: true
-jaeger:
-  enabled: false
-eckoperator:
-  enabled: false
-flux:
-  interval: 1m
-  rollback:
-    cleanupOnFail: false
-logging:
-  enabled: false
 monitoring:
   enabled: false
   sso:
     enabled: true
     prometheus:
       client_id: "prometheus"
-    alertmanager: 
+    alertmanager:
       client_id: "alertmanager"
-    grafana:  
+    grafana:
       client_id: "grafana"
       tls_skip_verify_insecure: true
       scopes: "Grafana"
@@ -54,22 +37,3 @@ monitoring:
           requests:
             cpu: 200m
             memory: 1Gi
-fluentbit:
-  enabled: false
-clusterAuditor:
-  enabled: false
-gatekeeper:
-  enabled: false
-kyverno:
-  enabled: false
-twistlock:
-  enabled: false
-addons:
-  keycloak:
-    enabled: false
-  gitlabRunner:
-    enabled: false
-  gitlab:
-    enabled: false
-  vault:
-    enabled: false
