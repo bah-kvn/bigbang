@@ -1,2 +1,107 @@
 domain: base.bahsoftwarefactory.com
 
+flux:
+  interval: 1m
+  rollback:
+    cleanupOnFail: false
+
+networkPolicies:
+  enabled: true
+  controlPlaneCidr: 0.0.0.0/0
+
+istio:
+  enabled: true
+
+istiooperator:
+  enabled: true
+
+jaeger:
+  enabled: false
+
+kiali:
+  enabled: true
+
+clusterAuditor:
+  enabled: false
+
+gatekeeper:
+  enabled: false
+
+kyverno:
+  enabled: false
+
+kyvernopolicies:
+  enabled: false
+
+kyvernoreporter:
+  enabled: false
+
+logging:
+  enabled: false
+
+eckoperator:
+  enabled: false
+
+fluentbit:
+  enabled: false
+
+promtail:
+  enabled: false
+
+loki:
+  enabled: false
+
+neuvector:
+  enabled: false
+
+tempo:
+  enabled: false
+
+monitoring:
+  enabled: false
+
+twistlock:
+  enabled: false
+
+addons:
+  argocd:
+    enabled: false
+
+  authservice:
+    enabled: false
+
+  minioOperator:
+    enabled: false
+
+  minio:
+    enabled: false
+
+  gitlab:
+    enabled: false
+
+  gitlabRunner:
+    enabled: false
+
+  nexusRepositoryManager:
+    enabled: false
+
+  sonarqube:
+    enabled: false
+
+  anchore:
+    enabled: false
+
+  mattermostOperator:
+    enabled: false
+
+  mattermost:
+    enabled: false
+
+  velero:
+    enabled: false
+
+  keycloak:
+    enabled: false
+
+  vault:
+    enabled: false

@@ -18,4 +18,3 @@ patchesStrategicMerge:
     ref:
       $patch: replace
       tag: "1.52.0"
-

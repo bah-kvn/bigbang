@@ -22,4 +22,3 @@ patchesStrategicMerge:
     name: bigbang
   spec:
     interval: 1m
-
