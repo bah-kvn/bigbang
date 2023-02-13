@@ -1,0 +1,10 @@
+# AWS region to apply cluster
+# Common variables for the region
+
+# Name of the AWS region
+region: "us-east-1"
+
+# Tags to apply to all resources in region
+region_tags:
+  Terraform: "git@github.com:boozallen/software-factory.git"
+  Owner: "software-factory"

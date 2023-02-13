@@ -59,6 +59,7 @@ refresh-istio.sh
 private-registry.sh
 istio-formatted.yaml
 **auth**
+kubeconfig 
 
 # BigBang
 bigbang.values
@@ -66,3 +67,7 @@ k8s-auth-example.sh
 scripts/gitlab-keycloak.yaml
 keycloak-gitlab.yaml
 tests/cypress/node_modules
+
+# Terraform/Terragrunt
+**/.terra*
+**/terragrunt-debug.tfvars.json

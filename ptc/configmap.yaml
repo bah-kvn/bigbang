@@ -1,4 +1,4 @@
-domain: "ptc.bahsoftwarefactory.com"
+domain: "dev-ptc.bahsoftwarefactory.com"
 
 istio:
   ingressGateways:
@@ -6,18 +6,18 @@ istio:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/ptc=owned,ingress-type=public"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/dev-ptc=owned,ingress-type=public"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
-          external-dns.alpha.kubernetes.io/hostname: "*.ptc.bahsoftwarefactory.com"
+          external-dns.alpha.kubernetes.io/hostname: "*.dev-ptc.bahsoftwarefactory.com"
           service.beta.kubernetes.io/load-balancer-source-ranges: "156.80.4.2/32, 10.40.7.0/24, 10.40.8.0/24, 10.40.9.0/24"
           service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-04987f9522e27a836, subnet-069fd7685cca4018a, subnet-08942469f925d9b66"
     passthrough-ingressgateway:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/ptc=owned,ingress-type=passthrough"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/dev-ptc=owned,ingress-type=passthrough"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
-          external-dns.alpha.kubernetes.io/hostname: "vault.ptc.bahsoftwarefactory.com, keycloak.ptc.bahsoftwarefactory.com"
+          external-dns.alpha.kubernetes.io/hostname: "vault.dev-ptc.bahsoftwarefactory.com, keycloak.dev-ptc.bahsoftwarefactory.com"
           service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "ssl"
           service.beta.kubernetes.io/load-balancer-source-ranges: "156.80.4.2/32, 10.40.7.0/24, 10.40.8.0/24, 10.40.9.0/24"
           service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-04987f9522e27a836, subnet-069fd7685cca4018a, subnet-08942469f925d9b66"
@@ -126,7 +126,7 @@ addons:
         tlsDisable: false
       injector:
         extraEnvironmentVars:
-          AGENT_INJECT_VAULT_ADDR: "https://vault.ptc.bahsoftwarefactory.com"
+          AGENT_INJECT_VAULT_ADDR: "https://vault.dev-ptc.bahsoftwarefactory.com"
       server:
         # The BigBang helm chart has configuration that can create the vault-tls secret and volume mount for you
         # Volume mount the secret so that Vault can support Istio ingress passthrough
@@ -153,7 +153,7 @@ addons:
         ingress:
           enabled: false
         extraEnvironmentVars:
-          VAULT_API_ADDR: https://vault.ptc.bahsoftwarefactory.com #istio GW domain
+          VAULT_API_ADDR: https://vault.dev-ptc.bahsoftwarefactory.com #istio GW domain
           VAULT_ADDR: https://127.0.0.1:8200
           VAULT_SKIP_VERIFY: "true"
           VAULT_LOG_FORMAT: "json"
@@ -184,21 +184,21 @@ addons:
                   leader_api_addr = "https://vault-vault-0.vault-vault-internal:8200"
                   leader_client_cert_file = "/vault/tls/tls.crt"
                   leader_client_key_file = "/vault/tls/tls.key"
-                  leader_tls_servername = "vault.ptc.bahsoftwarefactory.com"
+                  leader_tls_servername = "vault.dev-ptc.bahsoftwarefactory.com"
                 }
 
                 retry_join {
                   leader_api_addr = "https://vault-vault-1.vault-vault-internal:8200"
                   leader_client_cert_file = "/vault/tls/tls.crt"
                   leader_client_key_file = "/vault/tls/tls.key"
-                  leader_tls_servername = "vault.ptc.bahsoftwarefactory.com"
+                  leader_tls_servername = "vault.dev-ptc.bahsoftwarefactory.com"
                 }
 
                 retry_join {
                   leader_api_addr = "https://vault-vault-2.vault-vault-internal:8200"
                   leader_client_cert_file = "/vault/tls/tls.crt"
                   leader_client_key_file = "/vault/tls/tls.key"
-                  leader_tls_servername = "vault.ptc.bahsoftwarefactory.com"
+                  leader_tls_servername = "vault.dev-ptc.bahsoftwarefactory.com"
                 }
               }
 

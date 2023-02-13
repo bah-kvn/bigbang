@@ -1,15 +1,15 @@
-domain: "rmc.bahsoftwarefactory.com"
 
+domain: "dev-rmc.bahsoftwarefactory.com"
 istio:
   ingressGateways:
     public-ingressgateway:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/rmc=owned,ingress-type=public"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/dev-rmc=owned,ingress-type=public"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
-          external-dns.alpha.kubernetes.io/hostname: "*.rmc.bahsoftwarefactory.com"
-          service.beta.kubernetes.io/load-balancer-source-ranges: "156.80.4.2/32, 10.40.7.0/24, 10.40.8.0/24, 10.40.9.0/24"
+          external-dns.alpha.kubernetes.io/hostname: "*.dev-rmc.bahsoftwarefactory.com"
+          service.beta.kubernetes.io/load-balancer-source-ranges: "10.40.8.0/24, 10.40.9.0/24, 10.40.7.0/24, 128.229.4.0/24, 156.80.4.0/24"
           service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-04987f9522e27a836, subnet-069fd7685cca4018a, subnet-08942469f925d9b66"
   gateways:
     public:
@@ -17,7 +17,20 @@ istio:
         - "*.{{ .Values.domain }}"
       tls:
         credentialName: "public-cert"
-
+istiooperator:
+  enabled: true
+kiali:
+  enabled: true
+jaeger:
+  enabled: false
+eckoperator:
+  enabled: false
+flux:
+  interval: 1m
+  rollback:
+    cleanupOnFail: false
+logging:
+  enabled: false
 monitoring:
   enabled: false
   sso:

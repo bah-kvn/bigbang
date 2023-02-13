@@ -1,0 +1,125 @@
+cluster:
+  name: "dev-rmc"
+  rke2_version: "v1.24.10+rke2r1"
+  server:
+    profile: "FACTORY_RKE2_ControlPlane_Role"
+    replicas: 3
+    type: "m5ad.xlarge"
+    storage:
+      size: 100
+      encrypted: true
+      type: "gp3"
+  agent:
+    #profile: "BSF_RKE2_Worker_Role"  # temp fix for 7296 , need permissions available in CP role to add to sg from cli
+    profile: "FACTORY_RKE2_ControlPlane_Role"
+    replicas:
+      min: 1
+      desired: 2
+      max: 5
+    type: "m5ad.2xlarge"
+    storage:
+      size: 200
+      encrypted: true
+      type: "gp3"
+  init_script: |-
+    # Configure aws cli default region to current region, it'd be great if the aws cli did this on install........
+    aws configure set default.region $(curl -s http://169.254.169.254/latest/meta-data/placement/region)
+    # Mount added storage as kubernetes ephemeral-storage
+    mkfs -t xfs /dev/nvme2n1
+    mkdir -p /var/lib/rancher
+    mkdir -p /etc/rancher/rke2
+    tee /etc/rancher/rke2/audit-policy.yaml <<EOF
+    # Log all requests at the Metadata level.
+    apiVersion: audit.k8s.io/v1
+    kind: Policy
+    rules:
+    - level: Metadata
+    EOF
+    mount /dev/nvme2n1 /var/lib/rancher
+    mkdir -p /var/lib/rancher/rke2
+    mkdir -p /var/lib/rancher/kubelet
+    ln -s /var/lib/rancher/kubelet /var/lib/kubelet
+    # iptables rules needed based on https://docs.rke2.io/install/requirements/#networking
+    iptables -A INPUT -p tcp -m tcp --dport 2379 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 2380 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 9345 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 6443 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p udp -m udp --dport 8472 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 10250 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 30000:32767 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 4240 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 179 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p udp -m udp --dport 4789 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 5473 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 9098 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p tcp -m tcp --dport 9099 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p udp -m udp --dport 51820 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p udp -m udp --dport 51821 -m state --state NEW -j ACCEPT
+    iptables -A INPUT -p icmp --icmp-type 8 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+    iptables -A OUTPUT -p icmp --icmp-type 0 -m state --state ESTABLISHED,RELATED -j ACCEPT
+    # required for longhorn
+    sudo yum -y install iscsi-initiator-utils jq mktemp
+    sudo -- sh -c 'service iptables save; \
+                sysctl -w vm.max_map_count=524288; \
+                echo "vm.max_map_count=524288" > /etc/sysctl.d/vm-max_map_count.conf; \
+                sysctl -w fs.nr_open=13181252; \
+                echo "fs.nr_open=13181252" > /etc/sysctl.d/fs-nr_open.conf; \
+                sysctl -w fs.file-max=13181250; \
+                echo "fs.file-max=13181250" > /etc/sysctl.d/fs-file-max.conf; \
+                echo "* soft nofile 13181250" >> /etc/security/limits.d/ulimits.conf; \
+                echo "* hard nofile 13181250" >> /etc/security/limits.d/ulimits.conf; \
+                echo "* soft nproc  13181250" >> /etc/security/limits.d/ulimits.conf; \
+                echo "* hard nproc  13181250" >> /etc/security/limits.d/ulimits.conf; \
+                echo "fs.inotify.max_user_instances=1024" > /etc/sysctl.d/fs-inotify-max_user_instances.conf; \
+                sysctl -w fs.inotify.max_user_instances=1024; \
+                echo "fs.inotify.max_user_watches=1048576" > /etc/sysctl.d/fs-inotify-max_user_watches.conf; \
+                sysctl -w fs.inotify.max_user_watches=1048576; \
+                sysctl -p; \
+                modprobe xt_REDIRECT; \
+                modprobe xt_owner; \
+                modprobe xt_statistic'
+    printf "xt_REDIRECT\nxt_owner\nxt_statistic\n" | sudo tee -a /etc/modules
+    #one off fix for 7296 account
+    sg=$(curl -s http://169.254.169.254/latest/meta-data/security-groups  | grep '\-rke2-cluster')
+    sg_id=$(aws ec2 describe-security-groups --filter  Name=group-name,Values=$sg --query 'SecurityGroups[*].[GroupId]' --output text)
+    export public_ip=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+    export private_ip=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+    export public_cidr=$(echo $public_ip'/32')
+    export private_cidr=$(echo $private_ip'/32')
+    aws ec2 authorize-security-group-ingress --group-id $sg_id --protocol all --cidr $public_cidr
+    aws ec2 authorize-security-group-ingress --group-id $sg_id --protocol all --cidr $private_cidr
+  rke2_config: |-
+    write-kubeconfig-mode: "0644"
+    cloud-provider-name: "aws"
+    cni:
+      - calico
+    disable:
+      - rke2-canal
+      - rke2-ingress-nginx
+    audit-policy-file: /etc/rancher/rke2/audit-policy.yaml
+factory:
+  bigbang:
+    enabled: true
+    branch: "dev"
+    path: "rmc"
+    repo: "https://github.com/boozallen/bigbang.git"
+  cert_manager:
+    enabled: true
+  chart:
+    repo: "https://raw.githubusercontent.com/boozallen/bsf-charts/main/"
+    version: "0.2.15"
+  external_dns:
+    enabled: true
+  flux:
+    enabled: true
+  lets_encrypt:
+    email: "default@bah.com"
+    issuer: "letsencrypt-staging"
+  longhorn:
+    enabled: false
+  rancher:
+    enabled: true
+    chart:
+      version: "v2.7.1"
+  registry:
+    email: ""

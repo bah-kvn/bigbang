@@ -1,0 +1,28 @@
+Management Cluster - (rmc)
+  Rancher
+  Istio
+  Monitoring Stack
+
+Platform Tooling Cluster (ptc) - shared services
+  Harbor
+  KeyCloak
+  Vault
+  Istio
+  Monitoring Stack
+
+Developer Tooling Cluster (dtc)
+  JIRA
+  Confluence
+  Mattermost
+  Nexus
+  GitLab
+  Jenkins
+  SonarQube
+  Harbor
+  Software Studio Developer Portal
+  Istio
+  Monitoring Stack
+
+Application Workload Cluster (wl0) - developers application hosting
+  Istio
+  Monitoring Stack

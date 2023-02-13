@@ -1,4 +1,4 @@
-domain: "wl0.bahsoftwarefactory.com"
+domain: "dev-wl0.bahsoftwarefactory.com"
 
 istio:
   ingressGateways:
@@ -6,9 +6,9 @@ istio:
       type: "LoadBalancer"
       kubernetesResourceSpec:
         serviceAnnotations:
-          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/wl0=owned,ingress-type=public"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "kubernetes.io/cluster/dev-wl0=owned,ingress-type=public"
           service.beta.kubernetes.io/aws-load-balancer-type: nlb
-          external-dns.alpha.kubernetes.io/hostname: "*.wl0.bahsoftwarefactory.com"
+          external-dns.alpha.kubernetes.io/hostname: "*.dev-wl0.bahsoftwarefactory.com"
           service.beta.kubernetes.io/load-balancer-source-ranges: "156.80.4.2/32, 10.40.7.0/24, 10.40.8.0/24, 10.40.9.0/24"
           service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-04987f9522e27a836, subnet-069fd7685cca4018a, subnet-08942469f925d9b66"
   gateways:
