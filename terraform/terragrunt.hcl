@@ -1,7 +1,8 @@
 locals {
   env = merge(
     yamldecode(file(find_in_parent_folders("region.yaml"))),
-    yamldecode(file(find_in_parent_folders("env.yaml")))
+    yamldecode(file(find_in_parent_folders("env.yaml"))),
+    yamldecode(file(find_in_parent_folders("cluster.yaml")))
   )
 }
 

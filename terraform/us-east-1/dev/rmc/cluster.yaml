@@ -1,6 +1,12 @@
 cluster:
-  name: "dev-rmc"
+  name: "dev-4953"
   rke2_version: "v1.24.10+rke2r1"
+  nodepool_security_group_id: "sg-08e105c4ef8a997a7"
+  extra_security_groups:
+    - sg-0f86f910193aebc59
+    - sg-091143c10baf15518
+    - sg-034cb909fcfbf0829
+    - sg-03c593ecc63da41fb
   server:
     profile: "FACTORY_RKE2_ControlPlane_Role"
     replicas: 3
